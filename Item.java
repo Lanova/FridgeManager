@@ -113,9 +113,9 @@ public class Item {
 	 * @return String
 	 */
 	public String getDateAsString() {
-		String expectedPattern = "mm/dd/yyyy";
+		String expectedPattern = "MM/dd/yyyy";
 		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( "mm/dd/yyyy" );
+		formatter.applyPattern( expectedPattern );
 		formatter.setLenient( false );
 
 		String formattedDate = formatter.format( date );
