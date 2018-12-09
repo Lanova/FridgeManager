@@ -59,6 +59,6 @@ public class Item {
 
 	//toString
 	public String toString() {
-		return String.format( "%s %f", name, price );
+		return String.format( "%s %.2f", name, price );
 	}
 }

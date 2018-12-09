@@ -95,38 +95,18 @@ public class Main {
 				break;}
 				}while (option2 !=-1);	
 			case 3:
-/*
-					 /* System.out.print("What the name of the item "); perishable.setName() =
-					 * input.nextLine(); System.out.print("What the price : ");
-					 * perishable.setPrice() = input.nextDouble();
-					 * System.out.print("What the expiration : "); perishable.setDate() =
-					 * input.nextLine(); listOfItems[numberOfItems++] = newItem; break; case 3: /**
-					 * as we were talking that we think about leftover products as pershible with
-					 * exp. date but in days
-					 * 
-					 * System.out.print("What the name of the item "); perishable.setName() =
-					 * input.nextLine(); System.out.print("What the price : ");
-					 * perishable.setPrice() = input.nextDouble();
-					 * System.out.print("How many days it get stay in the fridge?: ");
-					 * perishable.updatedDate() = input.nextInt(); listOfItems[numberOfItems++] =
-					 * newItem; break; default: break; listOfItems[numberOfItems++] = newItem; } }
-					 * case 3:
-					 */
+
 					 System.out.printf("\n\tItems in the fridge\n");
 					 System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
 					 System.out.println("|-----+-------------+----------+-------------|"); //header
 					 System.out.print(ItemsInFridge);
-					 //for (int c = 0; c < numberOfItems; c++)
-					  //System.out.println("%d   %s", numberOfItems, ItemList[c].toString());
-					 System.out.println("Total number of items " + numberOfItems);
-					 
-					 /* System.out.print("What item you'd like to delete, please etner the ID: ");
-					 * int deletedeId = input.nextInt(); input.nextLine();
-					 * 
-					 * for (int c = 0; c < numberOfItems; c++) { if (ItemList[c].getId() ==
-					 * deletedeId) { ItemList[c].removeItem(); } else
-					 * System.out.println("There is no item with this ID"); }
-					 */
+
+					 System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
+					 int deletedeIndex = input.nextInt();
+					  //input.nextLine();
+					ItemsInFridge.removeItem(deletedeIndex);
+
+					  
 					break;
 			}
 		} while (option != -1);

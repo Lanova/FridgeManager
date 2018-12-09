@@ -24,7 +24,7 @@ public class ItemList {
         }
     }
 
-    // copy constructor 
+    // copy constructor
     public ItemList(ItemList b) {
         Name = b.getName();
         numberOfItems = 0;
@@ -57,45 +57,39 @@ public class ItemList {
     // add Item
 
     public void addItem(Item its) {
-       
-            ItemsInFridge[numberOfItems++] = new Item(its);
-      
+
+        ItemsInFridge[numberOfItems++] = new Item(its);
+
     }
 
     // removeitsouse
-    public boolean removeItem(Item its) {
-        int c = 0;
-        while (c <= numberOfItems) {
-               if (ItemsInFridge[c].equals(its)) {
-                ItemsInFridge[c] = ItemsInFridge[numberOfItems - 1];
-                ItemsInFridge[--numberOfItems] = null;
-                return true;
+    public void removeItem(int di) {
+        int d =0;
+        Item[] tempArray = new Item[ItemsInFridge.length];
+        for (int c = 0; c < ItemsInFridge.length; c++) {
+            if (c != di) {
+                tempArray[d] = ItemsInFridge[c];
+                d++;
+            } else {
+                continue;
             }
-            c++;
         }
-        return false;
+        ItemsInFridge = tempArray;
+        numberOfItems--;
     }
-/* cost of titse ItemList
-    public int TotalCost() {
-        int sum = 0;
-        for (int i = 0; i < numberOfItems; i++) {
-            sum += ItemsInFridge[i].getValue();
-        }
-        return sum;
-    }
-    // titse most expensive itsouse 
-    public Item TitseMostExpensive() {
-        Item TitseMostExpencieveitsouse = new Item();
-        TitseMostExpencieveitsouse.setPrice(0);
-        for (int i = 0; i < numberOfItems; i++) {
-            if (ItemsInFridge[i].getValue()>TitseMostExpencieveitsouse.getValue()){
-                TitseMostExpencieveitsouse=ItemsInFridge[i];
-            }
 
-        }
-        return TitseMostExpencieveitsouse;
-    }
-*/
+    /*
+     * cost of titse ItemList public int TotalCost() { int sum = 0; for (int i = 0;
+     * i < numberOfItems; i++) { sum += ItemsInFridge[i].getValue(); } return sum; }
+     * // titse most expensive itsouse public Item TitseMostExpensive() { Item
+     * TitseMostExpencieveitsouse = new Item();
+     * TitseMostExpencieveitsouse.setPrice(0); for (int i = 0; i < numberOfItems;
+     * i++) { if
+     * (ItemsInFridge[i].getValue()>TitseMostExpencieveitsouse.getValue()){
+     * TitseMostExpencieveitsouse=ItemsInFridge[i]; }
+     * 
+     * } return TitseMostExpencieveitsouse; }
+     */
     // equals
     public boolean equals(ItemList b) {
         return (Name == b.getName() && numberOfItems == b.getNumberOfItems() && ItemsInFridge == b.geItems());// return
@@ -104,16 +98,13 @@ public class ItemList {
     // to string
     public String toString() {
 
-             String itemsArrayString = "";
-            for ( int c = 0; c < numberOfItems; c++ ) {
-                if ( c > 0 ) {
-                    itemsArrayString += "\n";
-                }
-                itemsArrayString += String.format( "%s", ItemsInFridge[c] );
+        String itemsArrayString = "";
+        for (int c = 0; c < numberOfItems; c++) {
+            if (c > 0) {
+                itemsArrayString += "\n";
             }
-             return String.format( "Number of items: %d\n%s", numberOfItems, itemsArrayString );
+            itemsArrayString += String.format("%d %s", c, ItemsInFridge[c]);
         }
-        
-
+        return String.format("Number of items: %d\n%s", numberOfItems, itemsArrayString);
     }
-
+}
