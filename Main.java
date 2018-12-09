@@ -29,8 +29,9 @@ public class Main {
 		int option;
 		int option2;
 		int numberOfItems = 0;
-		Item[] ItemList = new Item[100];
-
+		//Item[] ItemsInFridge = new Item[30];
+		ItemList ItemsInFridge = new ItemList(); //= new Item[30];
+		
 		Scanner input = new Scanner(System.in);
 
 		do {
@@ -62,25 +63,29 @@ public class Main {
 				break;
 			case 2:
 
-				System.out.printf("\nAdd Item subMenu\n");
-				System.out.print("What kind of item do you want insert into the fridge ");
+				System.out.printf("\nsubMenu Add Item \n");
+				System.out.print("What kind of item do you want insert into the fridge\n");
 				System.out.println("[1] Item without expiration date");
 				System.out.println("[2] Perishable");
 				System.out.println("[3] Leftover item");
 				System.out.println("[-1]  Back to the main menu");
-				;
+				
 				option2 = input.nextInt();
 				input.nextLine();
 				switch (option2) {
 				case 1:
 
-					Item adding = new Item();
+					Item addedItem = new Item();
 					System.out.print("What the name of the item ");
-					adding.setName(input.nextLine());
+					addedItem.setName(input.nextLine());
 					System.out.print("What the price: ");
-					adding.setPrice(input.nextDouble());
-					ItemList[numberOfItems++] = adding;
+					addedItem.setPrice(input.nextDouble());
+					//ItemsInFridge[numberOfItems++] = addedItem;
+					ItemsInFridge.addItem(addedItem);
 
+					//ItemList itemList = new ItemList(ItemsInFridge);
+					//System.out.print(itemList);
+					
 					break;
 
 				case 2:

@@ -5,7 +5,6 @@ public class Item {
 	private int Id = 0;
 	private String name;
 	private double price;
-
 	/**
 	 * Default constructor.
 	 */
@@ -24,11 +23,10 @@ public class Item {
 	}
 
 	public Item( Item i ) {
-		Id=i.getId();
 		name   = i.getName();
 		price  = i.getPrice();
 	}
-
+ 
 	// Setter
 
 	public void setName( String n ) {

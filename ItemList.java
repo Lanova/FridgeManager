@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ItemList {
     private String Name;
+    private int totalNumberOfItems;
     private int numberOfItems;
     private Item[] ItemsInFridge;
 
@@ -14,12 +15,12 @@ public class ItemList {
         ItemsInFridge = new Item[30];
     }
 
-    public ItemList(Item[] h, int n) {
+    public ItemList(Item[] its) {
         Name = "List of your items in fridge";
-        numberOfItems = n;
-        ItemsInFridge = new Item[30];
-        for (int c = 0; c < numberOfItems; c++) {
-            ItemsInFridge[c] = new Item(h[c]);
+        totalNumberOfItems = its.length;
+        ItemsInFridge = new Item[totalNumberOfItems];
+        for (int c = 0; c < totalNumberOfItems; c++) {
+            ItemsInFridge[c] = new Item(its[c]);
         }
     }
 
@@ -49,23 +50,23 @@ public class ItemList {
         return numberOfItems;
     }
 
-    public Item[] geItem() {
+    public Item[] geItems() {
         return ItemsInFridge;
     }
 
     // add Item
 
-    public void addItem(Item h) {
+    public void addItem(Item its) {
        
-            ItemsInFridge[numberOfItems++] = new Item(h);
+            ItemsInFridge[numberOfItems++] = new Item(its);
       
     }
 
-    // removeHouse
-    public boolean removeItem(Item h) {
+    // removeitsouse
+    public boolean removeItem(Item its) {
         int c = 0;
         while (c <= numberOfItems) {
-            if (ItemsInFridge[c].equals(h)) {
+               if (ItemsInFridge[c].equals(its)) {
                 ItemsInFridge[c] = ItemsInFridge[numberOfItems - 1];
                 ItemsInFridge[--numberOfItems] = null;
                 return true;
@@ -74,7 +75,7 @@ public class ItemList {
         }
         return false;
     }
-/* cost of the ItemList
+/* cost of titse ItemList
     public int TotalCost() {
         int sum = 0;
         for (int i = 0; i < numberOfItems; i++) {
@@ -82,36 +83,37 @@ public class ItemList {
         }
         return sum;
     }
-    // the most expensive house 
-    public Item TheMostExpensive() {
-        Item TheMostExpencieveHouse = new Item();
-        TheMostExpencieveHouse.setPrice(0);
+    // titse most expensive itsouse 
+    public Item TitseMostExpensive() {
+        Item TitseMostExpencieveitsouse = new Item();
+        TitseMostExpencieveitsouse.setPrice(0);
         for (int i = 0; i < numberOfItems; i++) {
-            if (ItemsInFridge[i].getValue()>TheMostExpencieveHouse.getValue()){
-                TheMostExpencieveHouse=ItemsInFridge[i];
+            if (ItemsInFridge[i].getValue()>TitseMostExpencieveitsouse.getValue()){
+                TitseMostExpencieveitsouse=ItemsInFridge[i];
             }
 
         }
-        return TheMostExpencieveHouse;
+        return TitseMostExpencieveitsouse;
     }
 */
     // equals
     public boolean equals(ItemList b) {
-        return (Name == b.getName() && numberOfItems == b.getnumberOfItems() && ItemsInFridge == b.getItem());// return
+        return (Name == b.getName() && numberOfItems == b.getNumberOfItems() && ItemsInFridge == b.geItems());// return
     }
 
     // to string
     public String toString() {
 
-        // return
-        return String.format("%6s\n %s\n", Name, Arrays.toString(ItemsInFridge));
-
-        // for(c=0, c<numberOfItems, c++){
-        // num
-        // }
-
-        // System.out.println("Total number of houses " + numberOfItems);
+             String itemsArrayString = "";
+            for ( int c = 0; c < numberOfItems; c++ ) {
+                if ( c > 0 ) {
+                    itemsArrayString += "\n";
+                }
+                itemsArrayString += String.format( "%s", ItemsInFridge[c] );
+            }
+             return String.format( "Number of items: %d\n%s", numberOfItems, itemsArrayString );
+        }
+        
 
     }
 
-}
