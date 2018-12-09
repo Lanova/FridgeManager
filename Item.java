@@ -118,9 +118,7 @@ public class Item {
 		formatter.applyPattern( expectedPattern );
 		formatter.setLenient( false );
 
-		String formattedDate = formatter.format( date );
-
-		return formattedDate;
+		return formatter.format( date );
 	}
 
 	/**
