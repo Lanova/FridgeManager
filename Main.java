@@ -17,9 +17,9 @@ public class Main {
 		Date date = new Date();
 		String formattedDate = "";
 		boolean isValid = false;
-		String expectedPattern = "mm/dd/yyyy";
+		String expectedPattern = "MM/dd/yyyy";
 		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( "mm/dd/yyyy" );
+		formatter.applyPattern( expectedPattern );
 		formatter.setLenient( false );
 
 		do {
@@ -27,7 +27,6 @@ public class Main {
 			String userDate = input.nextLine();
 			try {
 				date = formatter.parse( userDate );
-				formattedDate = formatter.format( date );
 				isValid = true;
 			} catch ( ParseException e ) {
 				System.out.println( "That date isn't correct. Please try again." );
@@ -96,8 +95,6 @@ public class Main {
 						Item addedItem = new Item();
 						System.out.print("What the name of the item\n ");
 						addedItem.setName(input.nextLine());
-
-						addedItem.setDate( setFormattedDate() );
 
 						System.out.print("What the price:\n ");
 						addedItem.setPrice(input.nextDouble());
