@@ -11,6 +11,42 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
 public class Main {
+
+	public static Date setFormattedDate() {
+		Scanner input = new Scanner( System.in );
+		Date date = new Date();
+		String formattedDate = "";
+		boolean isValid = false;
+		String expectedPattern = "MM/dd/yyyy";
+		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
+		formatter.applyPattern( expectedPattern );
+		formatter.setLenient( false );
+
+		do {
+			System.out.print( "Please enter the date in mm/dd/yyyy format: " );
+			String userDate = input.nextLine();
+			try {
+				date = formatter.parse( userDate );
+				isValid = true;
+			} catch ( ParseException e ) {
+				System.out.println( "That date isn't correct. Please try again." );
+			}
+		} while ( ! isValid );
+
+		return date;
+	}
+
+	public static String getFormattedDate( Date date ) {
+		String expectedPattern = "mm/dd/yyyy";
+		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
+		formatter.applyPattern( "mm/dd/yyyy" );
+		formatter.setLenient( false );
+
+		String formattedDate = formatter.format( date );
+
+		return formattedDate;
+	}
+
 	public static void printMenu() {
 		System.out.printf("\nMenu\n");
 		System.out.println("[1] Set current date");
@@ -40,26 +76,8 @@ public class Main {
 			input.nextLine();
 			switch (option) {
 			case 1:
-				boolean isValid = false;
-				do {
-					System.out.print("Please enter the date in mm/dd/yyyy format: ");
-					SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-					formatter.setLenient(false);
-
-					try {
-						// (2) give the formatter a String that matches the SimpleDateFormat pattern
-						String current = input.nextLine();
-
-						Date parsedDate = formatter.parse(current);
-						String formattedCurrentDate = formatter.format(parsedDate);
-						isValid = true;
-						System.out.println(formattedCurrentDate);
-					} catch (ParseException e) {
-						System.out.println("Please enter the valid date\n");
-						// execution will come here if the String that is given
-						// does not match the expected format.
-					}
-				} while (!isValid);
+				Date date = setFormattedDate();
+				System.out.println( getFormattedDate( date ) );
 				break;
 			case 2:
 
@@ -72,28 +90,30 @@ public class Main {
 				option2 = input.nextInt();
 				input.nextLine();
 				switch (option2) {
-				case 1:
-						
-					Item addedItem = new Item();
-					System.out.print("What the name of the item\n ");
-					addedItem.setName(input.nextLine());
-					
-					System.out.print("What the price:\n ");
-					addedItem.setPrice(input.nextDouble());
-					//ItemsInFridge[numberOfItems++] = addedItem;
-					ItemsInFridge.addItem(addedItem);
-						numberOfItems++;
-						
-					//ItemList itemList = new ItemList(ItemsInFridge);
-					
+					case 1:
 
-				case 2:
-					
-				
-				break;
-				case 3:
-				break;}
-				}while (option2 !=-1);	
+						Item addedItem = new Item();
+						System.out.print("What the name of the item\n ");
+						addedItem.setName(input.nextLine());
+
+						System.out.print("What the price:\n ");
+						addedItem.setPrice(input.nextDouble());
+						//ItemsInFridge[numberOfItems++] = addedItem;
+						ItemsInFridge.addItem(addedItem);
+							numberOfItems++;
+
+						//ItemList itemList = new ItemList(ItemsInFridge);
+						break;
+
+
+					case 2:
+
+
+						break;
+					case 3:
+						break;
+					}
+				} while (option2 !=-1);
 			case 3:
 
 					 System.out.printf("\n\tItems in the fridge\n");
