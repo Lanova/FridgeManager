@@ -175,6 +175,6 @@ public class Item {
 	 * @return String
 	 */
 	public String toString() {
-		return String.format( "%s %s %.2f", name, getDateAsString(), price );
+		return String.format( "%s %.2f", name, price );
 	}
 }
