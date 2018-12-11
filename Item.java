@@ -3,7 +3,6 @@ import java.util.Date;
 
 public class Item {
 	private Date date;
-	private int id;
 	private String name;
 	private double price;
 
@@ -11,7 +10,6 @@ public class Item {
 	 * Default constructor.
 	 */
 	public Item() {
-		id    = -1;
 		name  = "";
 		price = 0.00;
 		date  = new Date();
@@ -24,21 +22,6 @@ public class Item {
 	 * @param price Price of the item.
 	 */
 	public Item( String name, double price ) {
-		id         = -1;
-		date       = new Date();
-		this.name  = name;
-		this.price = price;
-	}
-
-	/**
-	 * Constructor that sets the ID, name, and price.
-	 *
-	 * @param id ID of the item.
-	 * @param name Name of the item.
-	 * @param price Price of the item.
-	 */
-	public Item( int id, String name, double price ) {
-		this.id    = id;
 		date       = new Date();
 		this.name  = name;
 		this.price = price;
@@ -47,13 +30,11 @@ public class Item {
 	/**
 	 * Constructor that sets all of the properties of the item.
 	 *
-	 * @param id ID of the item.
 	 * @param date Date of the item.
 	 * @param name Name of the item.
 	 * @param price Price of the item.
 	 */
-	public Item( int id, Date date, String name, double price ) {
-		this.id    = id;
+	public Item( Date date, String name, double price ) {
 		this.date  = date;
 		this.name  = name;
 		this.price = price;
@@ -65,28 +46,9 @@ public class Item {
 	 * @param item Item to be copied.
 	 */
 	public Item( Item item ) {
-		id     = item.getId();
 		date   = item.getDate();
 		name   = item.getName();
 		price  = item.getPrice();
-	}
-
-	/**
-	 * Sets the ID of the item.
-	 *
-	 * @param id (maybe) Updated item ID.
-	 */
-	public void setId( int id ) {
-		this.id = id;
-	}
-
-	/**
-	 * Returns the ID of the item.
-	 *
-	 * @return int
-	 */
-	public int getId() {
-		return id;
 	}
 
 	/**
@@ -164,8 +126,7 @@ public class Item {
 	 * @return boolean
 	 */
 	public boolean equals( Item item ) {
-		return ( item.getId() == id ) &&
-				( item.getDate().equals( date ) ) &&
+		return ( item.getDate().equals( date ) ) &&
 				( item.getName().equals( name ) ) &&
 				( item.getPrice() == price );
 	}
