@@ -65,6 +65,7 @@ public class Main {
 		int option;
 		int option2;
 		int numberOfItems = 0;
+		Date date = new Date();
 		//Item[] ItemsInFridge = new Item[30];
 		ItemList ItemsInFridge = new ItemList(); //= new Item[30];
 		
@@ -76,8 +77,7 @@ public class Main {
 			input.nextLine();
 			switch (option) {
 			case 1:
-				Date date = setFormattedDate();
-				System.out.println( getFormattedDate( date ) );
+				date = setFormattedDate();
 				break;
 			case 2:
 
@@ -95,7 +95,7 @@ public class Main {
 						Item addedItem = new Item();
 						System.out.print("What the name of the item\n ");
 						addedItem.setName(input.nextLine());
-
+						addedItem.setDate( date );
 						System.out.print("What the price:\n ");
 						addedItem.setPrice(input.nextDouble());
 						//ItemsInFridge[numberOfItems++] = addedItem;
@@ -103,6 +103,8 @@ public class Main {
 							numberOfItems++;
 
 						//ItemList itemList = new ItemList(ItemsInFridge);
+
+						System.out.println( addedItem );
 						break;
 
 
