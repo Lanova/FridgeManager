@@ -123,11 +123,11 @@ public class Main {
 
 					 System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
 					 int deletedeIndex = input.nextInt();
-					  //input.nextLine();
-					ItemsInFridge.removeItem(deletedeIndex);
-
-					  
-					break;
+					 if (deletedeIndex!=-1){
+					 ItemsInFridge.removeItem(deletedeIndex);
+					 }
+					 else {
+					break;}
 			}
 		} while (option != -1);
 		System.out.println("Thank you, bye ");
