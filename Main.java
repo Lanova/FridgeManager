@@ -98,13 +98,9 @@ public class Main {
 						addedItem.setDate( date );
 						System.out.print("What the price:\n ");
 						addedItem.setPrice(input.nextDouble());
-						//ItemsInFridge[numberOfItems++] = addedItem;
 						ItemsInFridge.addItem(addedItem);
 							numberOfItems++;
 
-						//ItemList itemList = new ItemList(ItemsInFridge);
-
-						System.out.println( addedItem );
 						break;
 
 
@@ -125,9 +121,9 @@ public class Main {
 
 					 System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
 					 int deletedeIndex = input.nextInt();
-					  //input.nextLine();
+					 if(deletedeIndex != -1){
 					ItemsInFridge.removeItem(deletedeIndex);
-
+					 }
 					  
 					break;
 			}
