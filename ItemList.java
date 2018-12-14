@@ -189,6 +189,20 @@ public class ItemList {
     }
 
 	/**
+	 * Gets the price paid of all items in the ItemList.
+	 *
+	 * @return double
+	 */
+    public double getTotalCost() {
+		double totalCost = 0.00;
+		for ( int count = 0; count < numberOfItems; count++ ) {
+			totalCost += itemsInFridge[count].getPrice();
+		}
+
+		return totalCost;
+	}
+
+	/**
 	 * Check to see if the item list is equal to the item list passed in.
 	 *
 	 * @param itemList Item list to be checked against.
