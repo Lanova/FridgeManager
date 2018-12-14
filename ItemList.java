@@ -161,14 +161,31 @@ public class ItemList {
     }
 
 	/**
+	 * Returns an ItemList of perishable items with the name of the list being the parameter passed in.
+	 *
+	 * @param name Name of the newly created ItemList
+	 * @return ItemList
+	 */
+	public ItemList getPerishables( String name ) {
+	    ItemList perishableItems = new ItemList( name );
+	    for ( int c = 0; c < numberOfItems; c++ ) {
+		    if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
+			    perishableItems.addItem( itemsInFridge[c] );
+		    }
+	    }
+
+	    return perishableItems;
+    }
+
+	/**
 	 * Creates an ItemList from the differences between two ItemLists
 	 *
 	 * @param mustHaveList List of items that MUST be in the system checked by name.
 	 * @return ItemList
 	 */
 	public ItemList getShoppingList( ItemList mustHaveList ) {
-		ItemList shoppingList = new ItemList();
-		Item[] mustHaveItems = mustHaveList.getItems();
+		ItemList shoppingList     = new ItemList();
+		Item[] mustHaveItems      = mustHaveList.getItems();
 		int mustHaveNumberOfItems = mustHaveList.getNumberOfItems();
 
 		for ( int count = 0; count < mustHaveNumberOfItems; count++ ) {
@@ -187,6 +204,35 @@ public class ItemList {
 
 		return shoppingList;
     }
+
+	/**
+	 * Creates an ItemList from the differences between two ItemLists with the name being the parameter passed in.
+	 *
+	 * @param name Name of the newly created ItemList.
+	 * @param mustHaveList List of items that MUST be in the system.
+	 * @return ItemList
+	 */
+	public ItemList getShoppingList( String name, ItemList mustHaveList ) {
+		ItemList shoppingList     = new ItemList( name );
+		Item[] mustHaveItems      = mustHaveList.getItems();
+		int mustHaveNumberOfItems = mustHaveList.getNumberOfItems();
+
+		for ( int count = 0; count < mustHaveNumberOfItems; count++ ) {
+			boolean isInList = false;
+			for ( int innerCount = 0; innerCount < numberOfItems; innerCount++ ) {
+				if ( mustHaveItems[ count ].getName().equals( itemsInFridge[innerCount].getName() ) ) {
+					isInList = true;
+					break;
+				}
+			}
+
+			if ( ! isInList ) {
+				shoppingList.addItem( mustHaveItems[ count ] );
+			}
+		}
+
+		return shoppingList;
+	}
 
 	/**
 	 * Gets the price paid of all items in the ItemList.
