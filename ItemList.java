@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class ItemList {
     private String name;
@@ -8,24 +9,48 @@ public class ItemList {
 	 * Default constructor.
 	 */
 	public ItemList() {
-        name = "";
+        name          = "";
         numberOfItems = 0;
         itemsInFridge = new Item[30];
     }
 
 	/**
-	 * Copy constructor.
+	 * Constructor that is built with an array of items.
 	 *
 	 * @param itemList Array to be added to item list.
 	 */
 	public ItemList( Item[] itemList ) {
-        name = "";
+        name                   = "";
         int totalNumberOfItems = itemList.length;
-		itemsInFridge = new Item[totalNumberOfItems];
+		itemsInFridge          = new Item[ totalNumberOfItems ];
         for (int c = 0; c < totalNumberOfItems; c++ ) {
             itemsInFridge[c] = new Item( itemList[c] );
         }
     }
+
+	/**
+	 * Constructor that creates the object using the name.
+	 *
+	 * @param name Name of the item list.
+	 */
+	public ItemList( String name ) {
+		this.name     = name;
+	    numberOfItems = 0;
+	    itemsInFridge = new Item[30];
+    }
+
+	/**
+	 * Constructor that defines all properties.
+	 *
+	 * @param name Name of the list.
+	 * @param numberOfItems Number of items in the list.
+	 * @param itemsInFridge Items in the system.
+	 */
+	public ItemList( String name, int numberOfItems, Item[] itemsInFridge ) {
+		this.name          = name;
+		this.numberOfItems = numberOfItems;
+		this.itemsInFridge = itemsInFridge;
+	}
 
 	/**
 	 * Copy constructor.
@@ -33,9 +58,9 @@ public class ItemList {
 	 * @param itemList Item list to be copied.
 	 */
 	public ItemList( ItemList itemList ) {
-        name = itemList.getName();
-        numberOfItems = 0;
-	    itemsInFridge = new Item[30];
+        name          = itemList.getName();
+        numberOfItems = itemList.getNumberOfItems();
+	    itemsInFridge = itemList.getItems();
     }
 
 	/**
@@ -54,8 +79,16 @@ public class ItemList {
 	 */
 	public String getName() {
         return name;
-
     }
+
+	/**
+	 * Sets the number of items in the list.
+	 *
+	 * @param numberOfItems (maybe) Updated number of items in the list.
+	 */
+	public void setNumberOfItems( int numberOfItems ) {
+		this.numberOfItems = numberOfItems;
+	}
 
 	/**
 	 * Returns the number of items in the list.
@@ -99,9 +132,9 @@ public class ItemList {
 	 * @param id ID of item in the array.
 	 */
 	public void removeItem( int id ) {
-        int d =0;
+        int d = 0;
         Item[] tempArray = new Item[itemsInFridge.length];
-        for (int c = 0; c < itemsInFridge.length; c++) {
+        for ( int c = 0; c < itemsInFridge.length; c++ ) {
             if ( c != id ) {
                 tempArray[d] = itemsInFridge[c];
                 d++;
@@ -109,6 +142,50 @@ public class ItemList {
         }
         itemsInFridge = tempArray;
         numberOfItems--;
+    }
+
+	/**
+	 * Goes through the list and checks for perishable items.
+	 *
+	 * @return ItemList
+	 */
+	public ItemList getPerishables() {
+		ItemList perishableItems = new ItemList();
+		for ( int c = 0; c < numberOfItems; c++ ) {
+			if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
+				perishableItems.addItem( itemsInFridge[c] );
+			}
+		}
+
+		return perishableItems;
+    }
+
+	/**
+	 * Creates an ItemList from the differences between two ItemLists
+	 *
+	 * @param mustHaveList List of items that MUST be in the system checked by name.
+	 * @return ItemList
+	 */
+	public ItemList getShoppingList( ItemList mustHaveList ) {
+		ItemList shoppingList = new ItemList();
+		Item[] mustHaveItems = mustHaveList.getItems();
+		int mustHaveNumberOfItems = mustHaveList.getNumberOfItems();
+
+		for ( int count = 0; count < mustHaveNumberOfItems; count++ ) {
+			boolean isInList = false;
+			for ( int innerCount = 0; innerCount < numberOfItems; innerCount++ ) {
+				if ( mustHaveItems[ count ].getName().equals( itemsInFridge[innerCount].getName() ) ) {
+					isInList = true;
+					break;
+				}
+			}
+
+			if ( ! isInList ) {
+				shoppingList.addItem( mustHaveItems[ count ] );
+			}
+		}
+
+		return shoppingList;
     }
 
 	/**
@@ -120,7 +197,7 @@ public class ItemList {
 	public boolean equals( ItemList itemList ) {
         return ( itemList.getName().equals( name ) ) &&
 		        ( itemList.getNumberOfItems() == numberOfItems ) &&
-		        ( itemList.getItems() == itemsInFridge );// return
+		        ( Arrays.equals( itemList.getItems(), itemsInFridge ) );
     }
 
 	/**
@@ -135,8 +212,8 @@ public class ItemList {
             if (c > 0) {
                 itemsArrayString += "\n";
             }
-            itemsArrayString += String.format("%d %s", c, itemsInFridge[c]);
+            itemsArrayString += String.format( "%d %s", c, itemsInFridge[c] );
         }
-        return String.format("Number of items: %d\n%s", numberOfItems, itemsArrayString);
+        return String.format("Number of items: %d\n%s", numberOfItems, itemsArrayString );
     }
 }
