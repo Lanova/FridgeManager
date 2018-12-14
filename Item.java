@@ -126,7 +126,7 @@ public class Item {
 	 * @return boolean
 	 */
 	public boolean equals( Item item ) {
-		return ( item.getDate().equals( date ) ) &&
+		return ( item.getDate().compareTo( date ) == 0 ) &&
 				( item.getName().equals( name ) ) &&
 				( item.getPrice() == price );
 	}
