@@ -2,9 +2,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Item {
-	private Date date;
-	private String name;
-	private double price;
+	protected Date date;
+	protected String name;
+	protected double price;
 
 	/**
 	 * Default constructor.

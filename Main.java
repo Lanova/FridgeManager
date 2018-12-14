@@ -15,7 +15,6 @@ public class Main {
 	public static Date setFormattedDate() {
 		Scanner input = new Scanner( System.in );
 		Date date = new Date();
-		String formattedDate = "";
 		boolean isValid = false;
 		String expectedPattern = "MM/dd/yyyy";
 		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
@@ -37,9 +36,9 @@ public class Main {
 	}
 
 	public static String getFormattedDate( Date date ) {
-		String expectedPattern = "mm/dd/yyyy";
+		String expectedPattern = "MM/dd/yyyy";
 		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( "mm/dd/yyyy" );
+		formatter.applyPattern( "MM/dd/yyyy" );
 		formatter.setLenient( false );
 
 		String formattedDate = formatter.format( date );

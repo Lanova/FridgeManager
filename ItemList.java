@@ -1,109 +1,141 @@
 
-import java.lang.*;
-import java.util.*;
-
 public class ItemList {
-    private String Name;
-    private int totalNumberOfItems;
+    private String name;
     private int numberOfItems;
-    private Item[] ItemsInFridge;
+    private Item[] itemsInFridge;
 
-    // default constructor
-    public ItemList() {
-        Name = "List of your items in fridge";
+	/**
+	 * Default constructor.
+	 */
+	public ItemList() {
+        name = "";
         numberOfItems = 0;
-        ItemsInFridge = new Item[30];
+        itemsInFridge = new Item[30];
     }
 
-    public ItemList(Item[] its) {
-        Name = "List of your items in fridge";
-        totalNumberOfItems = its.length;
-        ItemsInFridge = new Item[totalNumberOfItems];
-        for (int c = 0; c < totalNumberOfItems; c++) {
-            ItemsInFridge[c] = new Item(its[c]);
+	/**
+	 * Copy constructor.
+	 *
+	 * @param itemList Array to be added to item list.
+	 */
+	public ItemList( Item[] itemList ) {
+        name = "";
+        int totalNumberOfItems = itemList.length;
+		itemsInFridge = new Item[totalNumberOfItems];
+        for (int c = 0; c < totalNumberOfItems; c++ ) {
+            itemsInFridge[c] = new Item( itemList[c] );
         }
     }
 
-    // copy constructor
-    public ItemList(ItemList b) {
-        Name = b.getName();
+	/**
+	 * Copy constructor.
+	 *
+	 * @param itemList Item list to be copied.
+	 */
+	public ItemList( ItemList itemList ) {
+        name = itemList.getName();
         numberOfItems = 0;
-        ItemsInFridge = new Item[30];
-        // for (c = 0; c <= numberOfItems; c++) {
-        // ItemsInFridge[c] = new Item(b);
-        // }
-    }
-    // setters
-
-    public void setName(String n) {
-        Name = n;
+	    itemsInFridge = new Item[30];
     }
 
-    // getters
+	/**
+	 * Sets the name of the list.
+	 *
+	 * @param name (maybe) Updated name of list.
+	 */
+	public void setName( String name ) {
+        this.name = name;
+    }
 
-    public String getName() {
-        return Name;
+	/**
+	 * Returns the name of the list.
+	 *
+	 * @return String
+	 */
+	public String getName() {
+        return name;
 
     }
 
-    public int getNumberOfItems() {
+	/**
+	 * Returns the number of items in the list.
+	 *
+	 * @return int
+	 */
+	public int getNumberOfItems() {
         return numberOfItems;
     }
 
-    public Item[] geItems() {
-        return ItemsInFridge;
+	/**
+	 * Returns the array of items in the system.
+	 *
+	 * @return array
+	 */
+	public Item[] getItems() {
+        return itemsInFridge;
     }
 
-    // add Item
-
-    public void addItem(Item its) {
-
-        ItemsInFridge[numberOfItems++] = new Item(its);
-
+	/**
+	 * Add an item to the list.
+	 *
+	 * @param item Item to be added to the list.
+	 */
+	public void addItem( Item item ) {
+        itemsInFridge[numberOfItems++] = new Item( item );
     }
 
-    // removeitsouse
-    public void removeItem(int di) {
+	/**
+	 * Add Perishable item to the list.
+	 *
+	 * @param item Perishable item to be added.
+	 */
+	public void addItem( PerishableItem item ) {
+    	itemsInFridge[numberOfItems++] = new PerishableItem( item );
+    }
+
+	/**
+	 * Remove item by ID
+	 *
+	 * @param id ID of item in the array.
+	 */
+	public void removeItem( int id ) {
         int d =0;
-        Item[] tempArray = new Item[ItemsInFridge.length];
-        for (int c = 0; c < ItemsInFridge.length; c++) {
-            if (c != di) {
-                tempArray[d] = ItemsInFridge[c];
+        Item[] tempArray = new Item[itemsInFridge.length];
+        for (int c = 0; c < itemsInFridge.length; c++) {
+            if ( c != id ) {
+                tempArray[d] = itemsInFridge[c];
                 d++;
-            } else {
-                continue;
             }
         }
-        ItemsInFridge = tempArray;
+        itemsInFridge = tempArray;
         numberOfItems--;
     }
 
-    /*
-     * cost of titse ItemList public int TotalCost() { int sum = 0; for (int i = 0;
-     * i < numberOfItems; i++) { sum += ItemsInFridge[i].getValue(); } return sum; }
-     * // titse most expensive itsouse public Item TitseMostExpensive() { Item
-     * TitseMostExpencieveitsouse = new Item();
-     * TitseMostExpencieveitsouse.setPrice(0); for (int i = 0; i < numberOfItems;
-     * i++) { if
-     * (ItemsInFridge[i].getValue()>TitseMostExpencieveitsouse.getValue()){
-     * TitseMostExpencieveitsouse=ItemsInFridge[i]; }
-     * 
-     * } return TitseMostExpencieveitsouse; }
-     */
-    // equals
-    public boolean equals(ItemList b) {
-        return (Name == b.getName() && numberOfItems == b.getNumberOfItems() && ItemsInFridge == b.geItems());// return
+	/**
+	 * Check to see if the item list is equal to the item list passed in.
+	 *
+	 * @param itemList Item list to be checked against.
+	 * @return boolean
+	 */
+	public boolean equals( ItemList itemList ) {
+        return ( itemList.getName().equals( name ) ) &&
+		        ( itemList.getNumberOfItems() == numberOfItems ) &&
+		        ( itemList.getItems() == itemsInFridge );// return
     }
 
-    // to string
-    public String toString() {
+	/**
+	 * Outputs the item list as a string.
+	 *
+	 * @return String
+	 */
+	public String toString() {
 
         String itemsArrayString = "";
         for (int c = 0; c < numberOfItems; c++) {
             if (c > 0) {
                 itemsArrayString += "\n";
             }
-            itemsArrayString += String.format("%d %s", c, ItemsInFridge[c]);
+            itemsArrayString += String.format("%d %s", c, itemsInFridge[c]);
         }
         return String.format("Number of items: %d\n%s", numberOfItems, itemsArrayString);
     }
