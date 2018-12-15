@@ -170,17 +170,28 @@ public class ItemList {
 	 * @return ItemList
 	 */
 	public ItemList getPerishables( String name ) {
-	    ItemList perishableItems = new ItemList( name );
-		PerishableItem perishableItem;
-		for ( int c = 0; c < numberOfItems; c++ ) {
-		    if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
-			    perishableItem = ( PerishableItem ) itemsInFridge[c];
-			    perishableItems.addItem( perishableItem );
-		    }
-	    }
-
+	    ItemList perishableItems = addPerishableLoop();
+	    perishableItems.setName( name );
 	    return perishableItems;
     }
+
+	/**
+	 * Loop through the ItemList and create a new lost of items that are perishable.
+	 *
+	 * @return ItemList
+	 */
+    private ItemList addPerishableLoop() {
+		ItemList perishableItems = new ItemList( name );
+		PerishableItem perishableItem;
+		for ( int c = 0; c < numberOfItems; c++ ) {
+			if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
+				perishableItem = ( PerishableItem ) itemsInFridge[c];
+				perishableItems.addItem( perishableItem );
+			}
+		}
+
+		return perishableItems;
+	}
 
 	/**
 	 * Returns an ItemList of expired items.
