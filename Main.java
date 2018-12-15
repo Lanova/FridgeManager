@@ -89,10 +89,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		// write your code here
-		// Connection connection = dbConnect.getConnection(); // Connect to the
-		// database.
-		// Connection connection = dbConnect.getDBConnectionUsingIam();
 		int option;
 		int option2;
 		int numberOfItems = 0;
