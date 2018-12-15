@@ -1,9 +1,6 @@
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class PerishableItem extends Item {
 	private Date expirationDate;

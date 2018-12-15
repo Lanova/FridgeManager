@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Date;
 
 public class ItemList {
     private String name;
@@ -151,9 +152,11 @@ public class ItemList {
 	 */
 	public ItemList getPerishables() {
 		ItemList perishableItems = new ItemList();
+		PerishableItem perishableItem;
 		for ( int c = 0; c < numberOfItems; c++ ) {
 			if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
-				perishableItems.addItem( itemsInFridge[c] );
+				perishableItem = ( PerishableItem ) itemsInFridge[c];
+				perishableItems.addItem( perishableItem );
 			}
 		}
 
@@ -168,14 +171,62 @@ public class ItemList {
 	 */
 	public ItemList getPerishables( String name ) {
 	    ItemList perishableItems = new ItemList( name );
-	    for ( int c = 0; c < numberOfItems; c++ ) {
+		PerishableItem perishableItem;
+		for ( int c = 0; c < numberOfItems; c++ ) {
 		    if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
-			    perishableItems.addItem( itemsInFridge[c] );
+			    perishableItem = ( PerishableItem ) itemsInFridge[c];
+			    perishableItems.addItem( perishableItem );
 		    }
 	    }
 
 	    return perishableItems;
     }
+
+	/**
+	 * Returns an ItemList of expired items.
+	 *
+	 * @param date Date to check the item to.
+	 * @return ItemList
+	 */
+	public ItemList getExpired( Date date ) {
+		return expirationLoop( date );
+    }
+
+	/**
+	 * Loop that gets the expired items out of an ItemList
+	 *
+	 * @param date Date to check the expiration date against.
+	 * @return ItemList
+	 */
+	private ItemList expirationLoop( Date date ) {
+	    ItemList expiredItems = new ItemList();
+	    PerishableItem expiredItem;
+
+	    for ( int c = 0; c < numberOfItems; c++ ) {
+		    if ( itemsInFridge[c].getClass() == PerishableItem.class ) {
+			    expiredItem = ( PerishableItem ) itemsInFridge[c];
+			    if ( expiredItem.isExpired( date ) ) {
+				    expiredItems.addItem( expiredItem );
+			    }
+		    }
+	    }
+
+	    return expiredItems;
+    }
+
+	/**
+	 * Returns an ItemList of expired items with a name and the date to check the item to.
+	 *
+	 * @param name Name of the ItemList object.
+	 * @param date Date to check the expiration date against.
+	 * @return ItemList
+	 */
+	public ItemList getExpired( String name, Date date ) {
+		ItemList expiredItems = expirationLoop( date );
+		expiredItems.setName( name );
+
+		return expiredItems;
+	}
 
 	/**
 	 * Creates an ItemList from the differences between two ItemLists
