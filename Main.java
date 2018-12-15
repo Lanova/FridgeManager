@@ -1,14 +1,8 @@
 
 import java.util.Scanner;
 import java.util.Date;
-import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 
 public class Main {
 
@@ -24,6 +18,27 @@ public class Main {
 		do {
 			System.out.print( "Please enter the date in mm/dd/yyyy format: " );
 			String userDate = input.nextLine();
+			try {
+				date = formatter.parse( userDate );
+				isValid = true;
+			} catch ( ParseException e ) {
+				System.out.println( "That date isn't correct. Please try again." );
+			}
+		} while ( ! isValid );
+
+		return date;
+	}
+
+	public static Date setFormattedDate( String userDate ) {
+		Scanner input = new Scanner( System.in );
+		Date date = new Date();
+		boolean isValid = false;
+		String expectedPattern = "MM/dd/yyyy";
+		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
+		formatter.applyPattern( expectedPattern );
+		formatter.setLenient( false );
+
+		do {
 			try {
 				date = formatter.parse( userDate );
 				isValid = true;
@@ -57,77 +72,91 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		// write your code here
-		// Connection connection = dbConnect.getConnection(); // Connect to the
-		// database.
-		// Connection connection = dbConnect.getDBConnectionUsingIam();
-		int option;
-		int option2;
-		int numberOfItems = 0;
-		Date date = new Date();
-		//Item[] ItemsInFridge = new Item[30];
-		ItemList ItemsInFridge = new ItemList(); //= new Item[30];
-		
+		Date date;
+		Date expirationDate;
+		String name;
+		double price;
+		ItemList ItemsInFridge = new ItemList( "Stadard List" ); //= new Item[30];
+		ItemList mustHaveItems = new ItemList( "Must have items" );
+
 		Scanner input = new Scanner(System.in);
+		date = setFormattedDate( "12/28/2018" );
+		expirationDate = setFormattedDate( "01/02/2019" );
+		Date systemDate = setFormattedDate( "01/10/2019" );
+		name = "Bread";
+		price = 4.25;
 
-		do {
-			printMenu();
-			option = input.nextInt();
-			input.nextLine();
-			switch (option) {
-			case 1:
-				date = setFormattedDate();
-				break;
-			case 2:
+		String name2 = "Milk";
+		String name3 = "Water";
 
-			do {System.out.printf("\nsubMenu Add Item \n");
-				System.out.print("What kind of item do you want insert into the fridge\n");
-				System.out.println("[1] Item without expiration date");
-				System.out.println("[2] Perishable");
-				System.out.println("[3] Leftover item");
-				System.out.println("[-1]  Back to the main menu");
-				option2 = input.nextInt();
-				input.nextLine();
-				switch (option2) {
-					case 1:
+		Item addedItem = new Item( date, name, price );
+		PerishableItem perishableItem = new PerishableItem( date, name, price, expirationDate );
 
-						Item addedItem = new Item();
-						System.out.print("What the name of the item\n ");
-						addedItem.setName(input.nextLine());
-						addedItem.setDate( date );
-						System.out.print("What the price:\n ");
-						addedItem.setPrice(input.nextDouble());
-						ItemsInFridge.addItem(addedItem);
-							numberOfItems++;
+		Item addedItem2 = new Item( date, name, price );
+		PerishableItem perishableItem2 = new PerishableItem( date, name, price, 7 );
 
-						break;
+		Item addedItem3 = new Item( date, name2, price );
 
+		Item addedItem4 = new Item( date, name3, price );
 
-					case 2:
+		System.out.println( perishableItem );
 
+		System.out.println( perishableItem2 );
 
-						break;
-					case 3:
-						break;
-					}
-				} while (option2 !=-1);
-			case 3:
+		System.out.println( getFormattedDate( systemDate ) );
 
-					 System.out.printf("\n\tItems in the fridge\n");
-					 System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-					 System.out.println("|-----+-------------+----------+-------------|"); //header
-					 System.out.print(ItemsInFridge);
+		if ( perishableItem.isExpired( systemDate ) ) {
+			System.out.println( "Checks if the item is expired." );
+			System.out.println( perishableItem.getName() + " is expired but not a leftover." );
+		} else if ( perishableItem.isSpoiled( systemDate ) ) {
+			System.out.println( "Checks if the item is expired and a leftover." );
+			System.out.println( perishableItem.getName() + " is expired and a leftover." );
+		} else {
+			System.out.println( perishableItem.getName() + " is still good!" );
+		}
 
-					 System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
-					 int deletedeIndex = input.nextInt();
-					 if(deletedeIndex != -1){
-					ItemsInFridge.removeItem(deletedeIndex);
-					 }
-					  
-					break;
-			}
-		} while (option != -1);
-		System.out.println("Thank you, bye ");
+		if ( perishableItem2.isExpired( systemDate ) ) {
+			System.out.println( "Checks if the item is expired." );
+			System.out.println( perishableItem2.getName() + " is expired but not a leftover." );
+		} else if ( perishableItem2.isSpoiled( systemDate ) ) {
+			System.out.println( "Checks if the item is expired and a leftover." );
+			System.out.println( perishableItem2.getName() + " is expired and a leftover." );
+		} else {
+			System.out.println( perishableItem2.getName() + " is still good!" );
+		}
+
+		if ( perishableItem.equals( perishableItem2 ) ) {
+			System.out.println( "The items are the same." );
+		} else {
+			System.out.println( "The items are not the same." );
+		}
+
+		System.out.println( "\n\n\n\n\n" );
+
+		ItemsInFridge.addItem( addedItem );
+		ItemsInFridge.addItem( addedItem2 );
+		ItemsInFridge.addItem( perishableItem );
+		ItemsInFridge.addItem( perishableItem2 );
+
+		mustHaveItems.addItem( addedItem );
+		mustHaveItems.addItem( addedItem3 );
+		mustHaveItems.addItem( addedItem4 );
+		mustHaveItems.addItem( perishableItem );
+
+		ItemList perishableItems = ItemsInFridge.getPerishables();
+
+		System.out.println( "Items in fridge:\n" + ItemsInFridge );
+
+		System.out.println( "Perishable items:\n" + perishableItems );
+		System.out.println( "Number of perishables is " + perishableItems.getNumberOfItems() );
+
+		System.out.println( "Must have items:\n" + mustHaveItems );
+		ItemList shoppingList = ItemsInFridge.getShoppingList( mustHaveItems );
+
+		System.out.println( "Shopping List:\n" + shoppingList );
+
+		System.out.println( "\n\n\n\n\n" );
+		System.out.println( "The total cost of the shopping list is " + shoppingList.getTotalCost() );
 
 	}
 }
