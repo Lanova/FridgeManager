@@ -209,7 +209,7 @@ public class ItemList {
 	 * @param date Date to check the expiration date against.
 	 * @return ItemList
 	 */
-	private ItemList expirationLoop( Date date ) {
+	public ItemList expirationLoop( Date date ) {
 	    ItemList expiredItems = new ItemList();
 	    PerishableItem expiredItem;
 
@@ -218,7 +218,10 @@ public class ItemList {
 			    expiredItem = ( PerishableItem ) itemsInFridge[c];
 			    if ( expiredItem.isExpired( date ) ) {
 				    expiredItems.addItem( expiredItem );
-			    }
+				}
+				else if(expiredItem.isSpoiled( date )){
+				    expiredItems.addItem( expiredItem );
+				}
 		    }
 	    }
 
