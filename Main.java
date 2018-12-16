@@ -93,8 +93,7 @@ public class Main {
 		int option2;
 		int numberOfItems = 0;
 		Date date = new Date();
-		//Item[] ItemsInFridge = new Item[30];
-		ItemList ItemsInFridge = new ItemList(); //= new Item[30];
+		ItemList ItemsInFridge = new ItemList(); 
 
 		Scanner input = new Scanner(System.in);
 
@@ -118,7 +117,6 @@ public class Main {
 						input.nextLine();
 						switch (option2) {
 							case 1:
-
 								Item addedItem = new Item();
 								System.out.print("What the name of the item\n ");
 								addedItem.setName(input.nextLine());
@@ -127,15 +125,33 @@ public class Main {
 								addedItem.setPrice(input.nextDouble());
 								ItemsInFridge.addItem(addedItem);
 								numberOfItems++;
-
 								break;
-
-
 							case 2:
-
-
+								PerishableItem perishable = new PerishableItem();
+								System.out.print("What the name of the item\n ");
+								perishable.setName(input.nextLine());
+								perishable.setDate( date );
+								System.out.print("What the price:\n ");
+								perishable.setPrice(input.nextDouble());
+								System.out.print("What the expiration date. ");
+								Date expDate = setFormattedDate();
+								perishable.setExpirationDate(expDate);
+								perishable.setLeftover(false);
+								ItemsInFridge.addItem(perishable);
+								numberOfItems++;
 								break;
 							case 3:
+							PerishableItem leftover = new PerishableItem();
+								System.out.print("What the name of the item\n ");
+								leftover.setName(input.nextLine());
+								leftover.setDate( date );
+								System.out.print("What the price:\n ");
+								leftover.setPrice(input.nextDouble());
+								System.out.print("For how many days it can stay in the fridge:\n ");
+								leftover.setExpirationDate(input.nextInt());
+								leftover.setLeftover(true);
+								ItemsInFridge.addItem(leftover);
+								numberOfItems++;
 								break;
 						}
 					} while (option2 !=-1);
@@ -145,13 +161,12 @@ public class Main {
 					System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
 					System.out.println("|-----+-------------+----------+-------------|"); //header
 					System.out.print(ItemsInFridge);
-
 					System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
 					int deletedeIndex = input.nextInt();
 					if(deletedeIndex != -1){
 						ItemsInFridge.removeItem(deletedeIndex);
 					}
-
+				
 					break;
 			}
 		} while (option != -1);

@@ -113,7 +113,7 @@ public class PerishableItem extends Item {
 	 *
 	 * @param daysUntilExpiration The number of days until expiration.
 	 */
-	private Date setExpirationDate( int daysUntilExpiration ) {
+	public Date setExpirationDate( int daysUntilExpiration ) {
 		Calendar tempCalendar = Calendar.getInstance();
 		tempCalendar.setTime( getDate() );
 		tempCalendar.add( Calendar.DATE, daysUntilExpiration );
