@@ -91,6 +91,7 @@ public class Main {
 	public static void main(String[] args) {
 		int option;
 		int option2;
+		int option3;
 		int numberOfItems = 0;
 		Date date = new Date();
 		ItemList ItemsInFridge = new ItemList(); 
@@ -108,7 +109,7 @@ public class Main {
 				case 2:
 
 					do {System.out.printf("\nsubMenu Add Item \n");
-						System.out.print("What kind of item do you want insert into the fridge\n");
+						System.out.print("What kind of items add into the fridge\n");
 						System.out.println("[1] Item without expiration date");
 						System.out.println("[2] Perishable");
 						System.out.println("[3] Leftover item");
@@ -147,13 +148,13 @@ public class Main {
 								leftover.setDate( date );
 								System.out.print("What the price:\n ");
 								leftover.setPrice(input.nextDouble());
-								System.out.print("For how many days it can stay in the fridge:\n ");
+								System.out.print("How many days should stay in the fridge:\n ");
 								leftover.setExpirationDate(input.nextInt());
 								leftover.setLeftover(true);
 								ItemsInFridge.addItem(leftover);
 								numberOfItems++;
-								break;
-						}
+								break;	}
+						
 					} while (option2 !=-1);
 				case 3:
 
@@ -166,8 +167,37 @@ public class Main {
 					if(deletedeIndex != -1){
 						ItemsInFridge.removeItem(deletedeIndex);
 					}
-				
 					break;
+
+					default:
+					do {System.out.printf("\nsubMenu Manage needs\n");
+						System.out.println("[1] Report spoiled and quetionable items");
+						System.out.println("[2] Manage “must have” items");
+						System.out.println("[3] Generate grocery list");
+						System.out.println("[-1]  Back to the main menu");
+						option3 = input.nextInt();
+						input.nextLine();
+						switch (option3) {
+							case 1:
+							System.out.println("What the current date?");
+							Date dateToCompereWith = setFormattedDate();
+							System.out.println("List of spoiled and quetionable items");
+							System.out.println("Please remove them from fridge");
+							ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
+							System.out.println(spoiledItems);
+							System.out.printf("The total of wasted money: %.2f", spoiledItems.getTotalCost());
+							break;
+							case 2:
+							break;
+							case 3: 
+							break;
+						}
+
+
+
+						break;
+					}while(option3 !=-1);
+					
 			}
 		} while (option != -1);
 		System.out.println("Thank you, bye ");
