@@ -12,24 +12,24 @@ public class Main {
 	 * @return Date
 	 */
 	public static Date setFormattedDate() {
-		Scanner input = new Scanner( System.in );
+		Scanner input = new Scanner(System.in);
 		Date date = new Date();
 		boolean isValid = false;
 		String expectedPattern = "MM/dd/yyyy";
-		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( expectedPattern );
-		formatter.setLenient( false );
+		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		formatter.applyPattern(expectedPattern);
+		formatter.setLenient(false);
 
 		do {
-			System.out.print( "Please enter the date in mm/dd/yyyy format: " );
+			System.out.print("Please enter the date in mm/dd/yyyy format: ");
 			String userDate = input.nextLine();
 			try {
-				date = formatter.parse( userDate );
+				date = formatter.parse(userDate);
 				isValid = true;
-			} catch ( ParseException e ) {
-				System.out.println( "That date isn't correct. Please try again." );
+			} catch (ParseException e) {
+				System.out.println("That date isn't correct. Please try again.");
 			}
-		} while ( ! isValid );
+		} while (!isValid);
 
 		return date;
 	}
@@ -40,23 +40,23 @@ public class Main {
 	 * @param userDate (maybe) String of text in the MM/dd/yyyy format.
 	 * @return Date
 	 */
-	public static Date setFormattedDate( String userDate ) {
-		Scanner input = new Scanner( System.in );
+	public static Date setFormattedDate(String userDate) {
+		Scanner input = new Scanner(System.in);
 		Date date = new Date();
 		boolean isValid = false;
 		String expectedPattern = "MM/dd/yyyy";
-		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( expectedPattern );
-		formatter.setLenient( false );
+		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		formatter.applyPattern(expectedPattern);
+		formatter.setLenient(false);
 
 		do {
 			try {
-				date = formatter.parse( userDate );
+				date = formatter.parse(userDate);
 				isValid = true;
-			} catch ( ParseException e ) {
-				System.out.println( "That date isn't correct. Please try again." );
+			} catch (ParseException e) {
+				System.out.println("That date isn't correct. Please try again.");
 			}
-		} while ( ! isValid );
+		} while (!isValid);
 
 		return date;
 	}
@@ -67,13 +67,13 @@ public class Main {
 	 * @param date Date to format.
 	 * @return String
 	 */
-	public static String getFormattedDate( Date date ) {
+	public static String getFormattedDate(Date date) {
 		String expectedPattern = "MM/dd/yyyy";
-		SimpleDateFormat formatter = new SimpleDateFormat( expectedPattern );
-		formatter.applyPattern( "MM/dd/yyyy" );
-		formatter.setLenient( false );
+		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		formatter.applyPattern("MM/dd/yyyy");
+		formatter.setLenient(false);
 
-		String formattedDate = formatter.format( date );
+		String formattedDate = formatter.format(date);
 
 		return formattedDate;
 	}
@@ -92,9 +92,12 @@ public class Main {
 		int option;
 		int option2;
 		int option3;
+		int option4;
+		boolean setMustHave;
 		int numberOfItems = 0;
 		Date date = new Date();
-		ItemList ItemsInFridge = new ItemList(); 
+		ItemList ItemsInFridge = new ItemList();
+		ItemList mustHavItemList = new ItemList();
 
 		Scanner input = new Scanner(System.in);
 
@@ -103,101 +106,141 @@ public class Main {
 			option = input.nextInt();
 			input.nextLine();
 			switch (option) {
-				case 1:
-					date = setFormattedDate();
-					break;
-				case 2:
+			case 1:
+				date = setFormattedDate();
+				break;
+			case 2:
 
-					do {System.out.printf("\nsubMenu Add Item \n");
-						System.out.print("What kind of items add into the fridge\n");
-						System.out.println("[1] Item without expiration date");
-						System.out.println("[2] Perishable");
-						System.out.println("[3] Leftover item");
-						System.out.println("[-1]  Back to the main menu");
-						option2 = input.nextInt();
-						input.nextLine();
-						switch (option2) {
+				do {
+					System.out.printf("\nsubMenu Add Item \n");
+					System.out.print("What kind of items add into the fridge\n");
+					System.out.println("[1] Item without expiration date");
+					System.out.println("[2] Perishable");
+					System.out.println("[3] Leftover item");
+					System.out.println("[-1]  Back to the main menu");
+					option2 = input.nextInt();
+					input.nextLine();
+					switch (option2) {
+					case 1:
+						Item addedItem = new Item();
+						System.out.print("What the name of the item\n ");
+						addedItem.setName(input.nextLine());
+						addedItem.setDate(date);
+						System.out.print("What the price:\n ");
+						addedItem.setPrice(input.nextDouble());
+						ItemsInFridge.addItem(addedItem);
+						numberOfItems++;
+						break;
+					case 2:
+						PerishableItem perishable = new PerishableItem();
+						System.out.print("What the name of the item\n ");
+						perishable.setName(input.nextLine());
+						perishable.setDate(date);
+						System.out.print("What the price:\n ");
+						perishable.setPrice(input.nextDouble());
+						System.out.print("What the expiration date. ");
+						Date expDate = setFormattedDate();
+						perishable.setExpirationDate(expDate);
+						perishable.setLeftover(false);
+						ItemsInFridge.addItem(perishable);
+						numberOfItems++;
+						break;
+					case 3:
+						PerishableItem leftover = new PerishableItem();
+						System.out.print("What the name of the item\n ");
+						leftover.setName(input.nextLine());
+						leftover.setDate(date);
+						System.out.print("What the price:\n ");
+						leftover.setPrice(input.nextDouble());
+						System.out.print("How many days should stay in the fridge:\n ");
+						leftover.setExpirationDate(input.nextInt());
+						leftover.setLeftover(true);
+						ItemsInFridge.addItem(leftover);
+						numberOfItems++;
+						break;
+					}
+
+				} while (option2 != -1);
+			case 3:
+
+				System.out.printf("\n\tItems in the fridge\n");
+				System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
+				System.out.println("|-----+-------------+----------+-------------|"); // header
+				System.out.print(ItemsInFridge);
+				System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
+				int deletedeIndex = input.nextInt();
+				if (deletedeIndex != -1) {
+					ItemsInFridge.removeItem(deletedeIndex);
+				}
+				break;
+
+			default:
+				do {
+					System.out.printf("\nsubMenu Manage needs\n");
+					System.out.println("[1] Report spoiled and quetionable items");
+					System.out.println("[2] Manage “must have” items");
+					System.out.println("[3] Generate grocery list");
+					System.out.println("[-1]  Back to the main menu");
+					option3 = input.nextInt();
+					input.nextLine();
+					switch (option3) {
+					case 1:
+						System.out.println("What the current date?");
+						Date dateToCompereWith = setFormattedDate();
+						System.out.println("List of spoiled and quetionable items");
+						System.out.println("Please remove them from fridge");
+						ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
+						System.out.println(spoiledItems);
+						System.out.printf("The total of wasted money: %.2f", spoiledItems.getTotalCost());
+						break;
+					case 2:
+						do {
+							System.out.print("\nsubsubMenu Manage mustHave List needs\n ");
+							System.out.println("[1] Add to mustHave list");
+							System.out.println("[2] Show must have list");
+							System.out.println("[3] Remove from mustHave list");
+							System.out.println("[-1]  Back to the main menu");
+							option4 = input.nextInt();
+							input.nextLine();
+							switch (option4) {
 							case 1:
-								Item addedItem = new Item();
-								System.out.print("What the name of the item\n ");
-								addedItem.setName(input.nextLine());
-								addedItem.setDate( date );
-								System.out.print("What the price:\n ");
-								addedItem.setPrice(input.nextDouble());
-								ItemsInFridge.addItem(addedItem);
+								Item mustHaveItem = new Item();
+								System.out.print("What the name of the mustHave item\n ");
+								mustHaveItem.setName(input.nextLine());
+								System.out.print("What the approximate price:\n ");
+								mustHaveItem.setPrice(input.nextDouble());
+								mustHavItemList.addItem(mustHaveItem);
 								numberOfItems++;
 								break;
 							case 2:
-								PerishableItem perishable = new PerishableItem();
-								System.out.print("What the name of the item\n ");
-								perishable.setName(input.nextLine());
-								perishable.setDate( date );
-								System.out.print("What the price:\n ");
-								perishable.setPrice(input.nextDouble());
-								System.out.print("What the expiration date. ");
-								Date expDate = setFormattedDate();
-								perishable.setExpirationDate(expDate);
-								perishable.setLeftover(false);
-								ItemsInFridge.addItem(perishable);
-								numberOfItems++;
+								System.out.printf("\n\tMustHave list\n");
+								System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
+								System.out.println("|-----+-------------+----------+-------------|"); // header
+								System.out.print(mustHavItemList);
 								break;
 							case 3:
-							PerishableItem leftover = new PerishableItem();
-								System.out.print("What the name of the item\n ");
-								leftover.setName(input.nextLine());
-								leftover.setDate( date );
-								System.out.print("What the price:\n ");
-								leftover.setPrice(input.nextDouble());
-								System.out.print("How many days should stay in the fridge:\n ");
-								leftover.setExpirationDate(input.nextInt());
-								leftover.setLeftover(true);
-								ItemsInFridge.addItem(leftover);
-								numberOfItems++;
-								break;	}
-						
-					} while (option2 !=-1);
-				case 3:
 
-					System.out.printf("\n\tItems in the fridge\n");
-					System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-					System.out.println("|-----+-------------+----------+-------------|"); //header
-					System.out.print(ItemsInFridge);
-					System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
-					int deletedeIndex = input.nextInt();
-					if(deletedeIndex != -1){
-						ItemsInFridge.removeItem(deletedeIndex);
-					}
-					break;
+								System.out.printf("\n\tMustHave list\n");
+								System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
+								System.out.println("|-----+-------------+----------+-------------|"); // header
+								System.out.print(mustHavItemList);
+								System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
+								int deletedMustHave = input.nextInt();
+								if (deletedMustHave != -1) {
+									mustHavItemList.removeItem(deletedMustHave);
+								}
 
-					default:
-					do {System.out.printf("\nsubMenu Manage needs\n");
-						System.out.println("[1] Report spoiled and quetionable items");
-						System.out.println("[2] Manage “must have” items");
-						System.out.println("[3] Generate grocery list");
-						System.out.println("[-1]  Back to the main menu");
-						option3 = input.nextInt();
-						input.nextLine();
-						switch (option3) {
-							case 1:
-							System.out.println("What the current date?");
-							Date dateToCompereWith = setFormattedDate();
-							System.out.println("List of spoiled and quetionable items");
-							System.out.println("Please remove them from fridge");
-							ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
-							System.out.println(spoiledItems);
-							System.out.printf("The total of wasted money: %.2f", spoiledItems.getTotalCost());
-							break;
-							case 2:
-							break;
-							case 3: 
-							break;
-						}
+								break;
+							}
+						} while (option4 != -1);
 
-
-
+					case 3:
 						break;
-					}while(option3 !=-1);
-					
+					}
+
+					break;
+				} while (option3 != -1);
+
 			}
 		} while (option != -1);
 		System.out.println("Thank you, bye ");
