@@ -272,15 +272,15 @@ public class ItemList {
 	}
 
 	/**
-	 * Creates an ItemList from the differences between two ItemLists with the name
-	 * being the parameter passed in.
+	 * Chech if the items from mustHave in a fridge, 
+	 * if so return the list of these items.
 	 *
-	 * @param name         Name of the newly created ItemList.
+	 * 
 	 * @param mustHaveList List of items that MUST be in the system.
 	 * @return ItemList
 	 */
-	public ItemList getShoppingList(String name, ItemList mustHaveList) {
-		ItemList shoppingList = new ItemList(name);
+	public ItemList gethaveInFridge(ItemList mustHaveList) {
+		ItemList haveInFridge = new ItemList(name);
 		Item[] mustHaveItems = mustHaveList.getItems();
 		int mustHaveNumberOfItems = mustHaveList.getNumberOfItems();
 
@@ -293,12 +293,12 @@ public class ItemList {
 				}
 			}
 
-			if (!isInList) {
-				shoppingList.addItem(mustHaveItems[count]);
+			if (isInList) {
+				haveInFridge.addItem(mustHaveItems[count]);
 			}
 		}
 
-		return shoppingList;
+		return haveInFridge;
 	}
 
 	/**

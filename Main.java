@@ -234,6 +234,11 @@ public class Main {
 						} while (option4 != -1);
 
 					case 3:
+						System.out.printf("\n You have them in the fridge\n");
+						ItemList haveInFridge = ItemsInFridge.gethaveInFridge( mustHaveItemList);
+						System.out.println(haveInFridge);
+						
+
 						System.out.printf("\n Grocery list\n");
 						ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList);
 						System.out.println(shoppingList);
