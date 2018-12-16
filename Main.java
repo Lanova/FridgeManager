@@ -93,11 +93,10 @@ public class Main {
 		int option2;
 		int option3;
 		int option4;
-		boolean setMustHave;
 		int numberOfItems = 0;
 		Date date = new Date();
 		ItemList ItemsInFridge = new ItemList();
-		ItemList mustHavItemList = new ItemList();
+		ItemList mustHaveItemList = new ItemList();
 
 		Scanner input = new Scanner(System.in);
 
@@ -188,7 +187,7 @@ public class Main {
 						System.out.println("What the current date?");
 						Date dateToCompereWith = setFormattedDate();
 						System.out.println("List of spoiled and quetionable items");
-						System.out.println("Please remove them from fridge");
+						System.out.println("Please remove items from the fridge");
 						ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
 						System.out.println(spoiledItems);
 						System.out.printf("The total of wasted money: %.2f", spoiledItems.getTotalCost());
@@ -209,25 +208,25 @@ public class Main {
 								mustHaveItem.setName(input.nextLine());
 								System.out.print("What the approximate price:\n ");
 								mustHaveItem.setPrice(input.nextDouble());
-								mustHavItemList.addItem(mustHaveItem);
+								mustHaveItemList.addItem(mustHaveItem);
 								numberOfItems++;
 								break;
 							case 2:
 								System.out.printf("\n\tMustHave list\n");
 								System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
 								System.out.println("|-----+-------------+----------+-------------|"); // header
-								System.out.print(mustHavItemList);
+								System.out.print(mustHaveItemList);
 								break;
 							case 3:
 
 								System.out.printf("\n\tMustHave list\n");
 								System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
 								System.out.println("|-----+-------------+----------+-------------|"); // header
-								System.out.print(mustHavItemList);
+								System.out.print(mustHaveItemList);
 								System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
 								int deletedMustHave = input.nextInt();
 								if (deletedMustHave != -1) {
-									mustHavItemList.removeItem(deletedMustHave);
+									mustHaveItemList.removeItem(deletedMustHave);
 								}
 
 								break;
@@ -235,6 +234,11 @@ public class Main {
 						} while (option4 != -1);
 
 					case 3:
+						System.out.printf("\n Grocery list\n");
+						ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList);
+						System.out.println(shoppingList);
+						System.out.printf("The total of wasted money: %.2f", shoppingList.getTotalCost());
+
 						break;
 					}
 
