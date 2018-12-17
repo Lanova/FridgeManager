@@ -195,7 +195,7 @@ public class Main {
                 System.out.print("\tPrice: ");
                 leftover.setPrice( getDoubleFromUser() );
                 System.out.print("\tHow many days can this stay in the fridge: ");
-                leftover.setExpirationDate(input.nextInt());
+                leftover.setExpirationDate( getIntFromUser() );
                 leftover.setLeftover(true);
                 ItemsInFridge.addItem(leftover);
                 break;
@@ -260,7 +260,7 @@ public class Main {
                       printHeader();
                       System.out.print(mustHaveItemList);
                       System.out.print(
-                          "\n\t\tWhat item you'd like to delete, please etner the ID: ");
+                          "\n\t\tWhat item you'd like to delete, please enter the ID: ");
                       int deletedMustHave = getIntFromUser();
                       if (deletedMustHave != -1) {
                         mustHaveItemList.removeItem(deletedMustHave);
