@@ -92,12 +92,34 @@ public class Main {
     System.out.println("|-----+-------------+----------+-------------|");
   }
 
+  /**
+   * Asks the user for a double and checks that the input is correct.
+   *
+   * @return double
+   */
+  public static double getDoubleFromUser() {
+    Scanner input = new Scanner( System.in );
+    boolean priceSet = false;
+    double price = 0.00;
+    do {
+      try {
+        price = input.nextDouble();
+        priceSet = true;
+      } catch ( Exception e ) {
+        System.out.println( "That doesn't seem right. Try again." );
+      }
+    } while ( ! priceSet );
+
+    return price;
+  }
+
   public static void main(String[] args) {
     int option;
     int option2;
     int option3;
     int option4;
     int numberOfItems = 0;
+    boolean priceSet;
     Date date = new Date();
     ItemList ItemsInFridge = new ItemList();
     ItemList mustHaveItemList = new ItemList();
@@ -115,32 +137,33 @@ public class Main {
         case 2:
           do {
             System.out.printf("\n\t-->Add Item \n");
-            System.out.print("\tWhat kind of items you'd like to add into the fridge\n");
+            System.out.print("\tWhat type of items would you like to add into the fridge?\n");
             System.out.println("\t[1] Item without expiration date");
             System.out.println("\t[2] Perishable");
             System.out.println("\t[3] Leftover item");
             System.out.println("\t[-1]  Back to the main menu");
+            System.out.print("\tEnter your option: ");
             option2 = input.nextInt();
             input.nextLine();
             switch (option2) {
               case 1:
                 Item addedItem = new Item();
-                System.out.print("\tWhat the product name: ");
+                System.out.print("\tName: ");
                 addedItem.setName(input.nextLine().toUpperCase());
                 addedItem.setDate(date);
-                System.out.print("\tWhat the price: ");
-                addedItem.setPrice(input.nextDouble());
+                System.out.print("\tPrice: ");
+                addedItem.setPrice( getDoubleFromUser() );
                 ItemsInFridge.addItem(addedItem);
                 numberOfItems++;
                 break;
               case 2:
                 PerishableItem perishable = new PerishableItem();
-                System.out.print("\tWhat the product name: ");
+                System.out.print("\tName: ");
                 perishable.setName(input.nextLine().toLowerCase());
                 perishable.setDate(date);
-                System.out.print("\tWhat the price: ");
-                perishable.setPrice(input.nextDouble());
-                System.out.print("\tWhat the expiration date. ");
+                System.out.print("\tPrice: ");
+                perishable.setPrice( getDoubleFromUser() );
+                System.out.print("\tExpiration date. ");
                 Date expDate = setFormattedDate();
                 perishable.setExpirationDate(expDate);
                 perishable.setLeftover(false);
@@ -149,12 +172,12 @@ public class Main {
                 break;
               case 3:
                 PerishableItem leftover = new PerishableItem();
-                System.out.print("\tWhat the product name: ");
+                System.out.print("\tName: ");
                 leftover.setName(input.nextLine().toLowerCase());
                 leftover.setDate(date);
-                System.out.print("\tWhat the price: ");
-                leftover.setPrice(input.nextDouble());
-                System.out.print("\tHow many days should stay in the fridge: ");
+                System.out.print("\tPrice: ");
+                leftover.setPrice( getDoubleFromUser() );
+                System.out.print("\tHow many days can this stay in the fridge: ");
                 leftover.setExpirationDate(input.nextInt());
                 leftover.setLeftover(true);
                 ItemsInFridge.addItem(leftover);
