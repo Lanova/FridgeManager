@@ -83,11 +83,13 @@ public class Main {
     System.out.println("[2] Add item");
     System.out.println("[3] Remove item");
     System.out.println("[4] Manage needs");
-    /** left for the next week */
     System.out.println("[-1] To exit");
     System.out.print("Enter your option: ");
   }
-
+public static void printHeader(){
+	System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
+    System.out.println("|-----+-------------+----------+-------------|"); 
+}
   public static void main(String[] args) {
     int option;
     int option2;
@@ -110,33 +112,33 @@ public class Main {
           break;
         case 2:
           do {
-            System.out.printf("\nsubMenu Add Item \n");
-            System.out.print("What kind of items add into the fridge\n");
-            System.out.println("[1] Item without expiration date");
-            System.out.println("[2] Perishable");
-            System.out.println("[3] Leftover item");
-            System.out.println("[-1]  Back to the main menu");
+            System.out.printf("\n\t-->Add Item \n");
+            System.out.print("\tWhat kind of items you'd like to add into the fridge\n");
+            System.out.println("\t[1] Item without expiration date");
+            System.out.println("\t[2] Perishable");
+            System.out.println("\t[3] Leftover item");
+            System.out.println("\t[-1]  Back to the main menu");
             option2 = input.nextInt();
             input.nextLine();
             switch (option2) {
               case 1:
                 Item addedItem = new Item();
-                System.out.print("What the name of the item\n ");
-                addedItem.setName(input.nextLine());
+                System.out.print("\tWhat the product name: ");
+                addedItem.setName(input.nextLine().toUpperCase());
                 addedItem.setDate(date);
-                System.out.print("What the price:\n ");
+                System.out.print("\tWhat the price: ");
                 addedItem.setPrice(input.nextDouble());
                 ItemsInFridge.addItem(addedItem);
                 numberOfItems++;
                 break;
               case 2:
                 PerishableItem perishable = new PerishableItem();
-                System.out.print("What the name of the item\n ");
-                perishable.setName(input.nextLine());
+                System.out.print("\tWhat the product name: ");
+                perishable.setName(input.nextLine().toLowerCase());
                 perishable.setDate(date);
-                System.out.print("What the price:\n ");
+                System.out.print("\tWhat the price: ");
                 perishable.setPrice(input.nextDouble());
-                System.out.print("What the expiration date. ");
+                System.out.print("\tWhat the expiration date. ");
                 Date expDate = setFormattedDate();
                 perishable.setExpirationDate(expDate);
                 perishable.setLeftover(false);
@@ -145,12 +147,12 @@ public class Main {
                 break;
               case 3:
                 PerishableItem leftover = new PerishableItem();
-                System.out.print("What the name of the item\n ");
-                leftover.setName(input.nextLine());
+                System.out.print("\tWhat the product name: ");
+                leftover.setName(input.nextLine().toLowerCase());
                 leftover.setDate(date);
-                System.out.print("What the price:\n ");
+                System.out.print("\tWhat the price: ");
                 leftover.setPrice(input.nextDouble());
-                System.out.print("How many days should stay in the fridge:\n ");
+                System.out.print("\tHow many days should stay in the fridge: ");
                 leftover.setExpirationDate(input.nextInt());
                 leftover.setLeftover(true);
                 ItemsInFridge.addItem(leftover);
@@ -158,13 +160,13 @@ public class Main {
                 break;
             }
 
-          } while (option2 != -1);
+		  } while (option2 != -1);
+		  break;
         case 3:
-          System.out.printf("\n\tItems in the fridge\n");
-          System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-          System.out.println("|-----+-------------+----------+-------------|"); // header
+          System.out.printf("\nItems in the fridge\n");
+		  printHeader();
           System.out.print(ItemsInFridge);
-          System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
+          System.out.print("\n\nWhat item you'd like to delete, please etner the ID: ");
           int deletedeIndex = input.nextInt();
           if (deletedeIndex != -1) {
             ItemsInFridge.removeItem(deletedeIndex);
@@ -173,74 +175,74 @@ public class Main {
 
         default:
           do {
-            System.out.printf("\nsubMenu Manage needs\n");
-            System.out.println("[1] Report spoiled and quetionable items");
-            System.out.println("[2] Manage “must have” items");
-            System.out.println("[3] Generate grocery list");
-            System.out.println("[-1]  Back to the main menu");
+            System.out.printf("\n\t-->Manage needs\n");
+            System.out.println("\t[1] Report spoiled and quetionable items");
+            System.out.println("\t[2] Manage “must have” items");
+            System.out.println("\t[3] Generate grocery list");
+            System.out.println("\t[-1]  Back to the main menu");
             option3 = input.nextInt();
             input.nextLine();
             switch (option3) {
-              case 1:
-                System.out.println("What the current date?");
+			  case 1:
+			
+                System.out.print("\tWhat the current date? ");
                 Date dateToCompereWith = setFormattedDate();
-                System.out.println("List of spoiled and quetionable items");
-                System.out.println("Please remove items from the fridge");
-                ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
-                System.out.println(spoiledItems);
-                System.out.printf("The total of wasted money: %.2f", spoiledItems.getTotalCost());
+                System.out.print("\tList of spoiled and quetionable items to remove\n");
+				ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
+				printHeader();
+                System.out.print(spoiledItems);
+                System.out.printf("\t\nThe total of wasted money: %.2f\n", spoiledItems.getTotalCost());
                 break;
               case 2:
                 do {
-                  System.out.print("\nsubsubMenu Manage mustHave List needs\n ");
-                  System.out.println("[1] Add to mustHave list");
-                  System.out.println("[2] Show must have list");
-                  System.out.println("[3] Remove from mustHave list");
-                  System.out.println("[-1]  Back to the main menu");
+                  System.out.print("\n\t\t-->--> Manage mustHave\n ");
+                  System.out.println("\t\t[1] Add to mustHave list");
+                  System.out.println("\t\t[2] Show must have list");
+                  System.out.println("\t\t[3] Remove from mustHave list");
+                  System.out.println("\t\t[-1]  Back to the main menu");
                   option4 = input.nextInt();
                   input.nextLine();
                   switch (option4) {
                     case 1:
                       Item mustHaveItem = new Item();
-                      System.out.print("What the name of the mustHave item\n ");
-                      mustHaveItem.setName(input.nextLine());
-                      System.out.print("What the approximate price:\n ");
+                      System.out.print("\t\tWhat the name of the mustHave item: ");
+                      mustHaveItem.setName(input.nextLine().toLowerCase());
+                      System.out.print("\t\tWhat the approximate price: ");
                       mustHaveItem.setPrice(input.nextDouble());
                       mustHaveItemList.addItem(mustHaveItem);
                       numberOfItems++;
                       break;
                     case 2:
-                      System.out.printf("\n\tMustHave list\n");
-                      System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-                      System.out.println(
-                          "|-----+-------------+----------+-------------|"); // header
+                      System.out.printf("\n\t\tMustHave list\n");
+                      printHeader();
                       System.out.print(mustHaveItemList);
                       break;
                     case 3:
-                      System.out.printf("\n\tMustHave list\n");
-                      System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-                      System.out.println(
-                          "|-----+-------------+----------+-------------|"); // header
+                      System.out.printf("\n\t\tMustHave list\n");
+                      printHeader();
                       System.out.print(mustHaveItemList);
-                      System.out.print("\nWhat item you'd like to delete, please etner the ID: ");
+                      System.out.print("\n\t\tWhat item you'd like to delete, please etner the ID: ");
                       int deletedMustHave = input.nextInt();
                       if (deletedMustHave != -1) {
                         mustHaveItemList.removeItem(deletedMustHave);
                       }
-
-                      break;
-                  }
-                } while (option4 != -1);
+					  break;
+                	}
+				} while (option4 != -1);
+				break;
 
               case 3:
-                System.out.printf("\n You have them in the fridge\n");
+				System.out.printf("\n\t You have mustHave items in the fridge\n");
+				printHeader();
+				
                 ItemList haveInFridge = ItemsInFridge.gethaveInFridge(mustHaveItemList);
                 System.out.println(haveInFridge);
 
-                System.out.printf("\n Grocery list\n");
+				System.out.printf("\n\t Grocery list (to buy list)\n");
+				printHeader();
                 ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList);
                 System.out.println(shoppingList);
-                System.out.printf("The total of wasted money: %.2f", shoppingList.getTotalCost());
+                System.out.printf("The total: %.2f\n", shoppingList.getTotalCost());
 
                 break;
             }

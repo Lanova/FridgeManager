@@ -131,6 +131,6 @@ public class Item {
 
   /** @return String */
   public String toString() {
-    return String.format("%s %s %.2f", name, getDateAsString(), price);
+    return String.format("\t%-15s %-8.2f", name, price);
   }
 }
