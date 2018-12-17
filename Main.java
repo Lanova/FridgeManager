@@ -141,7 +141,6 @@ public class Main {
     int option2;
     int option3;
     int option4;
-    int numberOfItems = 0;
     Date date = new Date();
     ItemList ItemsInFridge = new ItemList();
     ItemList mustHaveItemList = new ItemList();
@@ -174,7 +173,6 @@ public class Main {
                 System.out.print("\tPrice: ");
                 addedItem.setPrice( getDoubleFromUser() );
                 ItemsInFridge.addItem(addedItem);
-                numberOfItems++;
                 break;
               case 2:
                 PerishableItem perishable = new PerishableItem();
@@ -188,7 +186,6 @@ public class Main {
                 perishable.setExpirationDate(expDate);
                 perishable.setLeftover(false);
                 ItemsInFridge.addItem(perishable);
-                numberOfItems++;
                 break;
               case 3:
                 PerishableItem leftover = new PerishableItem();
@@ -201,7 +198,6 @@ public class Main {
                 leftover.setExpirationDate(input.nextInt());
                 leftover.setLeftover(true);
                 ItemsInFridge.addItem(leftover);
-                numberOfItems++;
                 break;
             }
 
@@ -253,7 +249,6 @@ public class Main {
                       System.out.print("\t\tPrice: ");
                       mustHaveItem.setPrice( getDoubleFromUser() );
                       mustHaveItemList.addItem(mustHaveItem);
-                      numberOfItems++;
                       break;
                     case 2:
                       System.out.print("\n\t\tMustHave list\n");
