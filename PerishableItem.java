@@ -211,7 +211,6 @@ public class PerishableItem extends Item {
    * @return String
    */
   public String toString() {
-    return String.format(
-        "\t%-15s %-8.2f %-8s", name, price, getExpirationDateAsString());
+    return String.format("\t%-15s %-8.2f %-8s", name, price, getExpirationDateAsString());
   }
 }

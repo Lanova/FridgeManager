@@ -86,10 +86,12 @@ public class Main {
     System.out.println("[-1] To exit");
     System.out.print("Enter your option: ");
   }
-public static void printHeader(){
-	System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
-    System.out.println("|-----+-------------+----------+-------------|"); 
-}
+
+  public static void printHeader() {
+    System.out.println("| Id  |    Name     |  Price   |  Exp. Date  |");
+    System.out.println("|-----+-------------+----------+-------------|");
+  }
+
   public static void main(String[] args) {
     int option;
     int option2;
@@ -160,11 +162,11 @@ public static void printHeader(){
                 break;
             }
 
-		  } while (option2 != -1);
-		  break;
+          } while (option2 != -1);
+          break;
         case 3:
           System.out.printf("\nItems in the fridge\n");
-		  printHeader();
+          printHeader();
           System.out.print(ItemsInFridge);
           System.out.print("\n\nWhat item you'd like to delete, please etner the ID: ");
           int deletedeIndex = input.nextInt();
@@ -183,15 +185,15 @@ public static void printHeader(){
             option3 = input.nextInt();
             input.nextLine();
             switch (option3) {
-			  case 1:
-			
+              case 1:
                 System.out.print("\tWhat the current date? ");
                 Date dateToCompereWith = setFormattedDate();
                 System.out.print("\tList of spoiled and quetionable items to remove\n");
-				ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
-				printHeader();
+                ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
+                printHeader();
                 System.out.print(spoiledItems);
-                System.out.printf("\t\nThe total of wasted money: %.2f\n", spoiledItems.getTotalCost());
+                System.out.printf(
+                    "\t\nThe total of wasted money: %.2f\n", spoiledItems.getTotalCost());
                 break;
               case 2:
                 do {
@@ -221,25 +223,26 @@ public static void printHeader(){
                       System.out.printf("\n\t\tMustHave list\n");
                       printHeader();
                       System.out.print(mustHaveItemList);
-                      System.out.print("\n\t\tWhat item you'd like to delete, please etner the ID: ");
+                      System.out.print(
+                          "\n\t\tWhat item you'd like to delete, please etner the ID: ");
                       int deletedMustHave = input.nextInt();
                       if (deletedMustHave != -1) {
                         mustHaveItemList.removeItem(deletedMustHave);
                       }
-					  break;
-                	}
-				} while (option4 != -1);
-				break;
+                      break;
+                  }
+                } while (option4 != -1);
+                break;
 
               case 3:
-				System.out.printf("\n\t You have mustHave items in the fridge\n");
-				printHeader();
-				
+                System.out.printf("\n\t You have mustHave items in the fridge\n");
+                printHeader();
+
                 ItemList haveInFridge = ItemsInFridge.gethaveInFridge(mustHaveItemList);
                 System.out.println(haveInFridge);
 
-				System.out.printf("\n\t Grocery list (to buy list)\n");
-				printHeader();
+                System.out.printf("\n\t Grocery list (to buy list)\n");
+                printHeader();
                 ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList);
                 System.out.println(shoppingList);
                 System.out.printf("The total: %.2f\n", shoppingList.getTotalCost());
