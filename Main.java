@@ -235,10 +235,10 @@ public class Main {
                 break;
               case 2:
                 do {
-                  System.out.print("\n\t\t-->--> Manage mustHave\n ");
+                  System.out.print("\n\t\t-->--> Manage must have list\n ");
                   System.out.println("\t\t[1] Add to must have list");
                   System.out.println("\t\t[2] Show must have list");
-                  System.out.println("\t\t[3] Remove from mustHave list");
+                  System.out.println("\t\t[3] Remove from must have list");
                   System.out.println("\t\t[-1] Back to the main menu");
                   option4 = getIntFromUser();
                   switch (option4) {
