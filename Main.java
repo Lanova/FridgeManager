@@ -206,7 +206,7 @@ public class Main {
               case 1:
                 Item addedItem = new Item();
                 System.out.print("\tName: ");
-                name = input.nextLine().tolowerCase();
+                name = input.nextLine().toLowerCase();
                 addedItem.setName( name );
                 addedItem.setDate(date);
                 System.out.print("\tPrice: ");
