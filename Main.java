@@ -137,6 +137,8 @@ public class Main {
         priceSet = true;
       } catch ( Exception e ) {
         System.out.println( "That doesn't seem right. Try again." );
+      } finally {
+	      input.nextLine();
       }
     } while ( ! priceSet );
 
@@ -156,38 +158,16 @@ public class Main {
     do {
       try {
         singleInt = input.nextInt();
+        intSet = true;
       } catch ( Exception e ) {
         System.out.println( "That doesn't seem right. Try again." );
+      } finally {
+	      input.nextLine();
       }
-      intSet = true;
+
     } while ( ! intSet );
 
     return singleInt;
-  }
-
-	/**
-	 * Gets either a 1 or a 2 from the user.
-	 *
-	 * @return int
-	 */
-	public static int isIntOneOrTwo() {
-  	Scanner input = new Scanner( System.in );
-  	int singleInt = 0;
-
-	  do {
-		  try {
-			  singleInt = input.nextInt();
-		  } catch ( Exception e ) {
-			  System.out.println( "That doesn't seem right. Try again." );
-		  }
-
-		  if ( singleInt > 2 ) {
-		  	System.out.println( "Enter 1 for yes or 2 for no." );
-		  }
-
-	  } while ( singleInt > 2 );
-
-	  return singleInt;
   }
 
   public static void main(String[] args) {
@@ -233,10 +213,12 @@ public class Main {
                 price = getDoubleFromUser();
                 addedItem.setPrice( price );
                 ItemsInFridge.addItem(addedItem);
-                System.out.print( "\tIs this item a must have? (1) yes, (2) no: " );
-				if ( isIntOneOrTwo() == 1 ) {
+                System.out.print( "\tIs this item a must have? (1) yes and any other number for no: " );
+				if ( getIntFromUser() == 1 ) {
 					Item tmpItem = new Item( date, name, price );
 					mustHaveItemList.addItem( tmpItem );
+				} else {
+					System.out.println( "Item won't be added to the must have list." );
 				}
                 break;
               case 2:
@@ -253,11 +235,13 @@ public class Main {
                 perishable.setExpirationDate(expDate);
                 perishable.setLeftover(false);
                 ItemsInFridge.addItem(perishable);
-                System.out.print( "\tIs this item a must have? (1) yes, (2) no: " );
-                if ( isIntOneOrTwo() == 1 ) {
-                	Item tmpItem = new Item( date, name, price );
-                	mustHaveItemList.addItem( tmpItem );
-                }
+                System.out.print( "\tIs this item a must have? (1) yes and any other number for no: " );
+                  if ( getIntFromUser() == 1 ) {
+		              Item tmpItem = new Item( date, name, price );
+		              mustHaveItemList.addItem( tmpItem );
+	              } else {
+		              System.out.println( "Item won't be added to the must have list." );
+	              }
                 break;
               case 3:
                 PerishableItem leftover = new PerishableItem();
@@ -374,13 +358,12 @@ public class Main {
                 break;
 
               default:
-                System.out.println( "Oops, something went wrong. Try again!" );
+                System.out.println( "Oops, something went wrong2. Try again!" );
                 break;
             }
           } while (option3 != -1);
 
         default:
-          System.out.println( "Oops, something went wrong. Try again!" );
           break;
       }
     } while (option != -1);
