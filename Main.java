@@ -79,11 +79,12 @@ public class Main {
   }
 
   public static void printMenu() {
-    System.out.printf("\nMenu\n");
+    System.out.print("\nMenu\n");
     System.out.println("[1] Set current date");
     System.out.println("[2] Add item");
     System.out.println("[3] Remove item");
-    System.out.println("[4] Manage needs");
+    System.out.println("[4] List all items");
+    System.out.println("[5] Manage needs");
     System.out.println("[-1] To exit");
     System.out.print("Enter your option: ");
   }
@@ -155,10 +156,10 @@ public class Main {
     do {
       try {
         singleInt = input.nextInt();
-        intSet = true;
       } catch ( Exception e ) {
         System.out.println( "That doesn't seem right. Try again." );
       }
+      intSet = true;
     } while ( ! intSet );
 
     return singleInt;
@@ -287,7 +288,13 @@ public class Main {
           }
           break;
 
-        default:
+        case 4:
+          System.out.print("\nItems in the fridge\n");
+          printHeader();
+          System.out.print(ItemsInFridge);
+          break;
+
+        case 5:
           do {
             System.out.print("\n\t-->Manage needs\n");
             System.out.println("\t[1] Report spoiled and questionable items");
@@ -326,12 +333,12 @@ public class Main {
                       mustHaveItemList.addItem(mustHaveItem);
                       break;
                     case 2:
-                      System.out.print("\n\t\tMustHave list\n");
+                      System.out.print("\n\t\tMust Have list\n");
                       printMustHaveHeader();
                       System.out.print(mustHaveItemList);
                       break;
                     case 3:
-                      System.out.print("\n\t\tMustHave list\n");
+                      System.out.print("\n\t\tMust Have list\n");
                       printHeader();
                       System.out.print(mustHaveItemList);
                       System.out.print(
@@ -342,6 +349,10 @@ public class Main {
                       if (deletedMustHave != -1 && isInList ) {
                         mustHaveItemList.removeItem(deletedMustHave);
                       }
+                      break;
+
+                    default:
+                      System.out.println( "Oops, something went wrong. Try again!" );
                       break;
                   }
                 } while (option4 != -1);
@@ -361,10 +372,16 @@ public class Main {
                 System.out.printf("The total: %.2f\n", shoppingList.getTotalCost());
 
                 break;
-            }
 
-            break;
+              default:
+                System.out.println( "Oops, something went wrong. Try again!" );
+                break;
+            }
           } while (option3 != -1);
+
+        default:
+          System.out.println( "Oops, something went wrong. Try again!" );
+          break;
       }
     } while (option != -1);
     System.out.println("Thank you, bye ");
