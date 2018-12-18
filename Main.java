@@ -2,6 +2,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -102,6 +103,17 @@ public class Main {
   	System.out.println("|-----+-------------+----------|");
   }
 
+  public static int[] getArrayOfIDS( ItemList itemList ) {
+		int numberOfItems = itemList.getNumberOfItems();
+		int[] arrayOfIds = new int[numberOfItems];
+
+		for ( int c = 0; c < numberOfItems; c++ ) {
+			arrayOfIds[c] = c;
+		}
+
+		return arrayOfIds;
+  }
+
   /**
    * Asks the user for a double and checks that the input is correct.
    *
@@ -178,6 +190,8 @@ public class Main {
     int option4;
     String name;
     double price;
+    IntStream intStream;
+    boolean isInList;
     Date date = new Date();
     ItemList ItemsInFridge = new ItemList();
     ItemList mustHaveItemList = new ItemList();
@@ -260,8 +274,10 @@ public class Main {
           System.out.print(ItemsInFridge);
           System.out.print("\n\nEnter the ID of the item you'd like to delete: ");
           int deletedIndex = getIntFromUser();
-          if (deletedIndex != -1) {
-            ItemsInFridge.removeItem(deletedIndex);
+          intStream = IntStream.of( getArrayOfIDS( ItemsInFridge ) );
+          isInList = intStream.anyMatch( x -> x == deletedIndex );
+          if (deletedIndex != -1 && isInList ) {
+	          ItemsInFridge.removeItem(deletedIndex);
           }
           break;
 
@@ -315,7 +331,9 @@ public class Main {
                       System.out.print(
                           "\n\t\tEnter the ID for the item you'd like to delete: ");
                       int deletedMustHave = getIntFromUser();
-                      if (deletedMustHave != -1) {
+                      intStream = IntStream.of( getArrayOfIDS( mustHaveItemList ) );
+                      isInList = intStream.anyMatch( x -> x == deletedMustHave );
+                      if (deletedMustHave != -1 && isInList ) {
                         mustHaveItemList.removeItem(deletedMustHave);
                       }
                       break;
