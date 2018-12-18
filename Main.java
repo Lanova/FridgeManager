@@ -92,6 +92,16 @@ public class Main {
     System.out.println("|-----+-------------+----------+-------------|");
   }
 
+	/**
+	 * Prints the header for the must have menu (no expiration dates shown).
+	 *
+	 * return void
+	 */
+	public static void printMustHaveHeader() {
+  	System.out.println("| Id  |    Name     |  Price   |");
+  	System.out.println("|-----+-------------+----------|");
+  }
+
   /**
    * Asks the user for a double and checks that the input is correct.
    *
@@ -136,11 +146,38 @@ public class Main {
     return singleInt;
   }
 
+	/**
+	 * Gets either a 1 or a 2 from the user.
+	 *
+	 * @return int
+	 */
+	public static int isIntOneOrTwo() {
+  	Scanner input = new Scanner( System.in );
+  	int singleInt = 0;
+
+	  do {
+		  try {
+			  singleInt = input.nextInt();
+		  } catch ( Exception e ) {
+			  System.out.println( "That doesn't seem right. Try again." );
+		  }
+
+		  if ( singleInt > 2 ) {
+		  	System.out.println( "Enter 1 for yes or 2 for no." );
+		  }
+
+	  } while ( singleInt > 2 );
+
+	  return singleInt;
+  }
+
   public static void main(String[] args) {
     int option;
     int option2;
     int option3;
     int option4;
+    String name;
+    double price;
     Date date = new Date();
     ItemList ItemsInFridge = new ItemList();
     ItemList mustHaveItemList = new ItemList();
@@ -168,24 +205,38 @@ public class Main {
               case 1:
                 Item addedItem = new Item();
                 System.out.print("\tName: ");
-                addedItem.setName(input.nextLine().toUpperCase());
+                name = input.nextLine().toUpperCase();
+                addedItem.setName( name );
                 addedItem.setDate(date);
                 System.out.print("\tPrice: ");
-                addedItem.setPrice( getDoubleFromUser() );
+                price = getDoubleFromUser();
+                addedItem.setPrice( price );
                 ItemsInFridge.addItem(addedItem);
+                System.out.print( "\tIs this item a must have? (1) yes, (2) no: " );
+				if ( isIntOneOrTwo() == 1 ) {
+					Item tmpItem = new Item( date, name, price );
+					mustHaveItemList.addItem( tmpItem );
+				}
                 break;
               case 2:
                 PerishableItem perishable = new PerishableItem();
                 System.out.print("\tName: ");
-                perishable.setName(input.nextLine().toLowerCase());
+                name = input.nextLine().toLowerCase();
+                perishable.setName( name );
                 perishable.setDate(date);
                 System.out.print("\tPrice: ");
-                perishable.setPrice( getDoubleFromUser() );
+                price = getDoubleFromUser();
+                perishable.setPrice( price );
                 System.out.print("\tExpiration date. ");
                 Date expDate = setFormattedDate();
                 perishable.setExpirationDate(expDate);
                 perishable.setLeftover(false);
                 ItemsInFridge.addItem(perishable);
+                System.out.print( "\tIs this item a must have? (1) yes, (2) no: " );
+                if ( isIntOneOrTwo() == 1 ) {
+                	Item tmpItem = new Item( date, name, price );
+                	mustHaveItemList.addItem( tmpItem );
+                }
                 break;
               case 3:
                 PerishableItem leftover = new PerishableItem();
@@ -216,7 +267,7 @@ public class Main {
 
         default:
           do {
-            System.out.printf("\n\t-->Manage needs\n");
+            System.out.print("\n\t-->Manage needs\n");
             System.out.println("\t[1] Report spoiled and questionable items");
             System.out.println("\t[2] Manage “must have” items");
             System.out.println("\t[3] Generate grocery list");
@@ -245,14 +296,16 @@ public class Main {
                     case 1:
                       Item mustHaveItem = new Item();
                       System.out.print("\t\tName: ");
-                      mustHaveItem.setName(input.nextLine().toLowerCase());
+                      name = input.nextLine().toLowerCase();
+                      mustHaveItem.setName(name);
                       System.out.print("\t\tPrice: ");
-                      mustHaveItem.setPrice( getDoubleFromUser() );
+                      price = getDoubleFromUser();
+                      mustHaveItem.setPrice(price);
                       mustHaveItemList.addItem(mustHaveItem);
                       break;
                     case 2:
                       System.out.print("\n\t\tMustHave list\n");
-                      printHeader();
+                      printMustHaveHeader();
                       System.out.print(mustHaveItemList);
                       break;
                     case 3:
@@ -260,7 +313,7 @@ public class Main {
                       printHeader();
                       System.out.print(mustHaveItemList);
                       System.out.print(
-                          "\n\t\tWhat item you'd like to delete, please enter the ID: ");
+                          "\n\t\tEnter the ID for the item you'd like to delete: ");
                       int deletedMustHave = getIntFromUser();
                       if (deletedMustHave != -1) {
                         mustHaveItemList.removeItem(deletedMustHave);
@@ -271,8 +324,8 @@ public class Main {
                 break;
 
               case 3:
-                System.out.print("\n\t You have mustHave items in the fridge\n");
-                printHeader();
+                System.out.print("\n\tMust have item list\n");
+                printMustHaveHeader();
 
                 ItemList haveInFridge = ItemsInFridge.gethaveInFridge(mustHaveItemList);
                 System.out.println(haveInFridge);

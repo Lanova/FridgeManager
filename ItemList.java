@@ -269,7 +269,7 @@ public class ItemList {
   }
 
   /**
-   * Chech if the items from mustHave in a fridge, if so return the list of these items.
+   * Check if the items from mustHave in a fridge, if so return the list of these items.
    *
    * @param mustHaveList List of items that MUST be in the system.
    * @return ItemList
