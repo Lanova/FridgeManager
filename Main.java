@@ -103,6 +103,12 @@ public class Main {
   	System.out.println("|-----+-------------+----------|");
   }
 
+  /**
+   * Creates an array of the IDs in the ItemList passed in.
+   *
+   * @param itemList ItemList to get array IDs of.
+   * @return int[]
+   */
   public static int[] getArrayOfIDS( ItemList itemList ) {
 		int numberOfItems = itemList.getNumberOfItems();
 		int[] arrayOfIds = new int[numberOfItems];
