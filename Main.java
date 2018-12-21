@@ -180,6 +180,7 @@ public class Main {
     IntStream intStream;
     boolean isInList;
     Date date = new Date();
+    Date dateToCompareWith = new Date();
     ItemList ItemsInFridge = new ItemList();
     ItemList mustHaveItemList = new ItemList();
 
@@ -289,9 +290,9 @@ public class Main {
             switch (option3) {
               case 1:
                 System.out.print("\tWhat is the current date? ");
-                Date dateToCompereWith = setFormattedDate();
+                dateToCompareWith = setFormattedDate();
                 System.out.print("\tList of spoiled and questionable items\n");
-                ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompereWith);
+                ItemList spoiledItems = ItemsInFridge.getExpired(dateToCompareWith);
                 printHeader();
                 System.out.print(spoiledItems);
                 System.out.printf(
@@ -343,6 +344,8 @@ public class Main {
                 break;
 
               case 3:
+              	System.out.print("\tWhat is the current date? ");
+              	dateToCompareWith = setFormattedDate();
                 System.out.print("\n\tMust have item list\n");
                 printMustHaveHeader();
 
@@ -351,7 +354,7 @@ public class Main {
 
                 System.out.print("\n\t Grocery list (to buy list)\n");
                 printHeader();
-                ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList);
+                ItemList shoppingList = ItemsInFridge.getShoppingList(mustHaveItemList, dateToCompareWith );
                 System.out.println(shoppingList);
                 System.out.printf("The total: %.2f\n", shoppingList.getTotalCost());
 

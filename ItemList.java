@@ -215,9 +215,7 @@ public class ItemList {
     for (int c = 0; c < numberOfItems; c++) {
       if (itemsInFridge[c].getClass() == PerishableItem.class) {
         expiredItem = (PerishableItem) itemsInFridge[c];
-        if (expiredItem.isExpired(date)) {
-          expiredItems.addItem(expiredItem);
-        } else if (expiredItem.isSpoiled(date)) {
+        if (expiredItem.isExpired(date) || expiredItem.isSpoiled( date )) {
           expiredItems.addItem(expiredItem);
         }
       }
@@ -246,17 +244,24 @@ public class ItemList {
    * @param mustHaveList List of items that MUST be in the system checked by name.
    * @return ItemList
    */
-  public ItemList getShoppingList(ItemList mustHaveList) {
+  public ItemList getShoppingList( ItemList mustHaveList, Date date ) {
     ItemList shoppingList = new ItemList();
     Item[] mustHaveItems = mustHaveList.getItems();
     int mustHaveNumberOfItems = mustHaveList.getNumberOfItems();
+    PerishableItem tempItem;
 
     for (int count = 0; count < mustHaveNumberOfItems; count++) {
       boolean isInList = false;
       for (int innerCount = 0; innerCount < numberOfItems; innerCount++) {
         if (mustHaveItems[count].getName().equals(itemsInFridge[innerCount].getName())) {
           isInList = true;
-          break;
+
+          if (itemsInFridge[innerCount].getClass() == PerishableItem.class) {
+            tempItem = ( PerishableItem ) itemsInFridge[ innerCount ];
+            if ( tempItem.isExpired( date ) ) {
+              isInList = false;
+            }
+          }
         }
       }
 
